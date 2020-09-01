@@ -1,0 +1,67 @@
+@{
+    var data = Model.Server;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>52ABP代码生成器对应开放的API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <h1>52ABP代码生成器对应的参数</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">值</th>
+                    <th scope="col">备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>实体的小写字母</td>
+                    <td>@Model.Server.Entity.LowerName</td>
+                    <td>@Model.Server.Entity.Name</td>
+                    <td>@Model.Server.Entity.EntityDisplayName</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <th scope="row">实体的属性渲染</th>
+                   @if (data.Entity.Properties != null)
+                    {
+                        foreach (var item in data.Entity.Properties)
+                         {
+                             @*<td>
+                                 实体属性的特性:
+                                 <ul>
+                                     @foreach (var prop in item.AttributesList)
+                                     {
+                                         <li>@prop</li>
+                                     }
+                                 </ul>
+                             </td>
+
+                             <td>字段类型： @item.FieldType?.ToString()</td>
+                             <td>字段类型字符 @item.FieldTypeStr</td>
+                             <td>字段类型的完整名称 @item.FieldType?.FullName</td>
+                             <td>控件类型 @item.ContrlType</td>
+                             <td>字段名称的注释？ @item.FieldDisplayName</td>*@
+                         }
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>333</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

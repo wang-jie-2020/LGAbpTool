@@ -1,0 +1,104 @@
+@using YoyoSoft.AbpDtoGenerator.HtmlControlNames
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.SPAClient;
+    var editCheckedDto = data.GetEditCheckedDtoFields();
+
+}
+import { Component, OnInit, Injector, Input, ViewChild, AfterViewInit } from '@@angular/core';
+import { ModalComponentBase } from '@@shared/component-base/modal-component-base';
+import {
+CreateOrUpdate@{@data.Entity.Name}Input,
+@{@data.Entity.Name}EditDto,
+@{@data.Entity.Name}ServiceProxy,
+KeyValuePairOfStringString
+} from '@@shared/service-proxies/service-proxies';
+import { Validators, AbstractControl, FormControl } from '@@angular/forms';
+import { finalize } from 'rxjs/operators';
+
+@@Component({
+  selector: 'create-or-edit-@{@data.Entity.SplitName}',
+  templateUrl: './create-or-edit-@{@data.Entity.SplitName}.component.html',
+  styleUrls:[
+	'create-or-edit-@{@data.Entity.SplitName}.component.less'
+    ],
+    })
+
+    export class CreateOrEdit@{@data.Entity.Name}Component
+    extends ModalComponentBase
+    implements OnInit {
+    /**
+    * 编辑时DTO的id
+    */
+    id: any ;
+
+    entity: @{@data.Entity.Name}EditDto=new @{@data.Entity.Name}EditDto();
+    @{
+        foreach (var item in editCheckedDto)
+        {
+            if (item.ContrlType == AppYoYoSoftControlNames.Enums)
+            {var codegist = item.FieldTypeStrFirstCharToLower + @"TypeEnum: KeyValuePairOfStringString[] = [];";
+                @codegist
+
+            }
+            
+        }}
+    /**
+    * 构造函数，在此处配置依赖注入
+    */
+    constructor(
+    injector: Injector,
+    private _@{@data.Entity.LowerName}Service: @{@data.Entity.Name}ServiceProxy
+
+    ) {
+    super(injector);
+    }
+
+    ngOnInit() :void{
+    this.init();
+    }
+
+
+    /**
+    * 初始化方法
+    */
+    init(): void {
+    this._@{@data.Entity.LowerName}Service.getForEdit(this.id).subscribe(result => {
+    this.entity = result.@{@data.Entity.LowerName};
+    
+                            @{
+                               foreach (var item in editCheckedDto)
+                                {
+                                    if (item.ContrlType==AppYoYoSoftControlNames.Enums)
+                                    {
+                                        var codegist = @"this." + item.FieldTypeStrFirstCharToLower + "TypeEnum = result." + item.FieldTypeStrFirstCharToLower + "TypeEnum;";
+                                        @codegist
+                                    }
+
+                                  
+                                }
+
+                           }
+                           
+                           
+                           });
+    }
+
+    /**
+    * 保存方法,提交form表单
+    */
+    submitForm(): void {
+    const input = new CreateOrUpdate@{@data.Entity.Name}Input();
+    input.@{@data.Entity.LowerName} = this.entity;
+
+    this.saving = true;
+
+    this._@{@data.Entity.LowerName}Service.createOrUpdate(input)
+    .finally(() => (this.saving = false))
+    .pipe(finalize(() => (this.saving = false)))
+    .subscribe(() => {
+    this.notify.success(this.l('SavedSuccessfully'));
+    this.success(true);
+    });
+    }
+    }

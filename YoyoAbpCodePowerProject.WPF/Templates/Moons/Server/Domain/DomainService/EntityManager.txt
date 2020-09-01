@@ -1,0 +1,119 @@
+﻿
+@{
+    var data = Model.Server;
+}
+using Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+
+namespace @{@data.Entity.Namespace}.DomainService
+{
+    /// <summary>
+    /// @{@data.Entity.EntityDisplayName}领域服务层一个模块的核心业务逻辑
+    ///</summary>
+    public class @{@data.Entity.Name}Manager :@{@data.ReplaceInfo.SolutionNamespace}DomainServiceBase, I@{@data.Entity.Name}Manager
+    {
+		
+		private readonly IRepository<@{@data.Entity.Name},@{@data.Entity.EntityKeyName}> _@{@data.Entity.LowerName}Repository;
+
+		/// <summary>
+		/// @{@data.Entity.Name}的构造方法
+		/// 通过构造函数注册服务到依赖注入容器中
+		///</summary>
+	public @{@data.Entity.Name}Manager(IRepository<@{@data.Entity.Name}, @{@data.Entity.EntityKeyName}> @{@data.Entity.LowerName}Repository)	{
+			_@{@data.Entity.LowerName}Repository =  @{@data.Entity.LowerName}Repository;
+		}
+
+		 #region 查询判断的业务
+
+        /// <summary>
+        /// 返回表达式数的实体信息即IQueryable类型
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<@{@data.Entity.Name}> Query@{@data.Entity.Name}s()
+        {
+            return _@{@data.Entity.LowerName}Repository.GetAll();
+        }
+
+        /// <summary>
+        /// 返回即IQueryable类型的实体，不包含EF Core跟踪标记
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<@{@data.Entity.Name}> Query@{@data.Entity.Name}sAsNoTracking()
+        {
+            return _@{@data.Entity.LowerName}Repository.GetAll().AsNoTracking();
+        }
+
+        /// <summary>
+        /// 根据Id查询实体信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<@{@data.Entity.Name}> FindByIdAsync(@{@data.Entity.EntityKeyName} id)
+        {
+            var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(id);
+            return entity;
+        }
+
+        /// <summary>
+        /// 检查实体是否存在
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> IsExistAsync(@{@data.Entity.EntityKeyName} id)
+        {
+            var result = await _@{@data.Entity.LowerName}Repository.GetAll().AnyAsync(a => a.Id == id);
+            return result;
+        }
+
+        #endregion
+
+		 
+		 
+        public async Task<@{@data.Entity.Name}> CreateAsync(@{@data.Entity.Name} entity)
+        {
+            entity.Id = await _@{@data.Entity.LowerName}Repository.InsertAndGetIdAsync(entity);
+            return entity;
+        }
+
+        public async Task UpdateAsync(@{@data.Entity.Name} entity)
+        {
+            await _@{@data.Entity.LowerName}Repository.UpdateAsync(entity);
+        }
+
+        public async Task DeleteAsync(@{@data.Entity.EntityKeyName} id)
+        {
+            //TODO:删除前的逻辑判断，是否允许删除
+            await _@{@data.Entity.LowerName}Repository.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task BatchDelete(List<@{@data.Entity.EntityKeyName}> input)
+        {
+            //TODO:删除前的逻辑判断，是否允许删除
+            await _@{@data.Entity.LowerName}Repository.DeleteAsync(a => input.Contains(a.Id));
+        }
+	 
+			
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+
+
+
+		 
+		  
+		 
+
+	}
+}

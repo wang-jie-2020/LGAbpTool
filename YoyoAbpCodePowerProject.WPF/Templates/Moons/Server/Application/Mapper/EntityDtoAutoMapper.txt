@@ -1,0 +1,32 @@
+@{
+    var data = Model.Server;
+ 
+}
+using AutoMapper;
+using @data.Entity.Namespace;
+using @{@data.Entity.Namespace}.Dtos;
+
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.CustomDtoAutoMapper
+{
+
+	/// <summary>
+    /// 配置@{@data.Entity.Name}的AutoMapper映射
+	/// 前往 <see cref="@{@data.ReplaceInfo.SolutionNamespace}ApplicationModule"/>的AbpAutoMapper配置方法下添加以下代码段
+    /// @{@data.Entity.Name}DtoAutoMapper.CreateMappings(configuration);
+    /// </summary>
+	internal static class @{@data.Entity.Name}DtoAutoMapper
+    {
+        public static void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+           
+            configuration.CreateMap <@{@data.Entity.Name}EditDto,@{@data.Entity.Name}>();
+            configuration.CreateMap <@{@data.Entity.Name},@{@data.Entity.Name}EditDto>();
+					 
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+        }
+	}
+}

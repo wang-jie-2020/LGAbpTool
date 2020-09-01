@@ -1,0 +1,23 @@
+
+@{
+    var data = Model.Server;
+}
+using Abp.Application.Services.Dto;
+
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Dtos
+{
+    public class PagedAndSortedInputDto : PagedInputDto, ISortedResultRequest
+    {
+        public string Sorting { get; set; }
+
+
+		 
+		 
+         
+
+        public PagedAndSortedInputDto()
+        {
+            MaxResultCount = AppLtmConsts.DefaultPageSize;
+        }
+    }
+}

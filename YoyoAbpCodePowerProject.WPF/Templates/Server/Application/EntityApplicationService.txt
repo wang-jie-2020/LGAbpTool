@@ -1,0 +1,252 @@
+@using YoyoSoft.AbpDtoGenerator.HtmlControlNames
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+
+@{
+    var data = Model.Server;
+    var option = Model.MainWindowsOptionCfg;
+    var isHaveEnums = data.Entity.Properties.Any(a => a.ContrlType == AppYoYoSoftControlNames.Enums);
+}
+using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.AutoMapper;
+using Abp.Linq.Extensions;
+using Abp.Extensions;
+using Abp.Domain.Repositories;
+using L._52ABP.Application.Dtos;
+using L._52ABP.Common.Extensions.Enums;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
+using @data.Entity.Namespace;
+using @{@data.Entity.Namespace}.Dtos;
+using @{@data.Entity.Namespace}.Exporting;
+@data.ReplaceInfo.DomainServicesNamespace
+using @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Authorization;
+
+namespace @data.Entity.Namespace
+{
+    /// <summary>
+    /// @{@data.Entity.EntityDisplayName}应用层服务的接口实现方法
+    ///</summary>
+    [AbpAuthorize]
+    public class @{@data.Entity.Name}AppService : @{@data.ReplaceInfo.SolutionNamespace}AppServiceBase, I@{@data.Entity.Name}AppService
+    {
+         private readonly IRepository<@{@data.Entity.Name}, @data.Entity.EntityKeyName>        _@{@data.Entity.LowerName}Repository;
+
+        @if (option.UseExportExcel) {<pre> private readonly I@{@data.Entity.Name}ListExcelExporter _@{@data.Entity.LowerName}ListExcelExporter;</pre>   }
+
+          @if (isHaveEnums)    {<pre> private readonly IEnumExtensionsAppService _enumExtensionsAppService;</pre>    }
+
+        @data.ReplaceInfo.PrivateIEntityNameManager
+        /// <summary>
+        /// 构造函数
+        ///</summary>
+        public @{@data.Entity.Name}AppService(
+		IRepository<@{@data.Entity.Name}, @data.Entity.EntityKeyName>  @{@data.Entity.LowerName}Repository
+              @data.ReplaceInfo.IEntityNameManager       
+              @if (option.UseExportExcel){<pre>,@{@data.Entity.Name}ListExcelExporter @{@data.Entity.LowerName}ListExcelExporter</pre>} 
+
+              @if (isHaveEnums){<pre>, IEnumExtensionsAppService enumExtensionsAppService</pre>}                                                                                          
+             )
+            {
+            _@{@data.Entity.LowerName}Repository = @{@data.Entity.LowerName}Repository;
+            @data.ReplaceInfo.EntityNameManager
+            @if (option.UseExportExcel){<pre>_@{@data.Entity.LowerName}ListExcelExporter = @{@data.Entity.LowerName}ListExcelExporter;</pre>}
+
+            @if (isHaveEnums){<pre> _enumExtensionsAppService = enumExtensionsAppService;</pre>}
+
+            }
+
+
+            /// <summary>
+                /// 获取@{@data.Entity.EntityDisplayName}的分页列表信息
+                ///      </summary>
+            /// <param name="input"></param>
+            /// <returns></returns>
+            @data.ReplaceInfo.PermissionQuery
+            public async Task<PagedResultDto<@{@data.Entity.Name}ListDto>> GetPaged(Get@{@data.Entity.Name}sInput input)
+		{
+
+		    var query = _@{@data.Entity.LowerName}Repository.GetAll()
+			  @{ foreach (var item in data.Entity.Properties)
+                           {
+                               if (item.FieldTypeStr=="string")
+                               {
+                           <pre>
+                            //模糊搜索@{@item.FieldDisplayName}
+                          .WhereIf(!input.FilterText.IsNullOrWhiteSpace(), a => a.@{@item.FieldName}.Contains(input.FilterText))                            </pre>                               }                           }                       }
+			;
+			// TODO:根据传入的参数添加过滤条件
+
+			var count = await query.CountAsync();
+
+			var @{@data.Entity.LowerName}List = await query
+					.OrderBy(input.Sorting).AsNoTracking()
+					.PageBy(input)
+					.ToListAsync();
+
+		  var @{@data.Entity.LowerName}ListDtos = ObjectMapper.Map<List<@{@data.Entity.Name}ListDto>>(@{@data.Entity.LowerName}List);
+
+			return new PagedResultDto<@{@data.Entity.Name}ListDto>(count,@{@data.Entity.LowerName}ListDtos);
+		}
+
+
+		/// <summary>
+		/// 通过指定id获取@{@data.Entity.Name}ListDto信息
+		/// </summary>
+		@data.ReplaceInfo.PermissionQuery
+		public async Task<@{@data.Entity.Name}ListDto> GetById(EntityDto<@data.Entity.EntityKeyName> input)
+		{
+			var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id);
+
+			var dto = ObjectMapper.Map<@{@data.Entity.Name}ListDto>(entity);
+			return dto;
+ 		}
+
+		/// <summary>
+		/// 获取编辑 @{@data.Entity.EntityDisplayName}
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		@data.ReplaceInfo.EntityCreateOrEditPermission
+		public async Task<Get@{@data.Entity.Name}ForEditOutput> GetForEdit(NullableIdDto<@data.Entity.EntityKeyName> input)
+		{
+			var output = new Get@{@data.Entity.Name}ForEditOutput();
+			@{@data.Entity.Name}EditDto editDto;
+
+			if (input.Id.HasValue)
+			{
+				var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id.Value);
+				editDto = ObjectMapper.Map<@{@data.Entity.Name}EditDto>(entity);
+			}
+			else
+			{
+				editDto = new @{@data.Entity.Name}EditDto();
+			}
+    
+            @{
+                var entityEnums= data.Entity.Properties.Where(a => a.ContrlType == AppYoYoSoftControlNames.Enums).ToList();
+                foreach (var model in entityEnums)
+                {
+       var codeGist = @"output."+model.FieldTypeStr+ "TypeEnum = _enumExtensionsAppService.GetEntityDoubleStringKeyValueList<" + model.FieldTypeStr + ">();";
+                    @codeGist
+                }
+
+            }
+
+            output.@{@data.Entity.Name} = editDto;
+			return output;
+		}
+
+
+		/// <summary>
+		/// 添加或者修改@{@data.Entity.EntityDisplayName}的公共方法
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		@data.ReplaceInfo.EntityCreateOrEditPermission
+		public async Task CreateOrUpdate(CreateOrUpdate@{@data.Entity.Name}Input input)
+		{
+
+			if (input.@{@data.Entity.Name}.Id.HasValue)
+			{
+				await Update(input.@{@data.Entity.Name});
+			}
+			else
+			{
+				await Create(input.@{@data.Entity.Name});
+			}
+		}
+
+
+		/// <summary>
+		/// 新增@{@data.Entity.EntityDisplayName}
+		/// </summary>
+		@data.ReplaceInfo.PermissionCreate
+		protected virtual async Task<@{@data.Entity.Name}EditDto> Create(@{@data.Entity.Name}EditDto input)
+		{
+			//TODO:新增前的逻辑判断，是否允许新增
+
+            var entity = ObjectMapper.Map<@{@data.Entity.Name}>(input);
+            //调用领域服务
+            entity = await _@{@data.Entity.LowerName}Manager.CreateAsync(entity);
+
+            var dto=ObjectMapper.Map<@{@data.Entity.Name}EditDto>(entity);
+            return dto;
+		}
+
+		/// <summary>
+		/// 编辑@{@data.Entity.EntityDisplayName}
+		/// </summary>
+		@data.ReplaceInfo.PermissionEdit
+		protected virtual async Task Update(@{@data.Entity.Name}EditDto input)
+		{
+			//TODO:更新前的逻辑判断，是否允许更新
+
+		 var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id.Value);
+          //  input.MapTo(entity);
+          //将input属性的值赋值到entity中
+             ObjectMapper.Map(input, entity);
+            await _@{@data.Entity.LowerName}Manager.UpdateAsync(entity);
+		}
+
+
+
+		/// <summary>
+		/// 删除@{@data.Entity.EntityDisplayName}信息
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		@data.ReplaceInfo.PermissionDelete
+		public async Task Delete(EntityDto<@data.Entity.EntityKeyName> input)
+		{
+			//TODO:删除前的逻辑判断，是否允许删除
+            await _@{@data.Entity.LowerName}Manager.DeleteAsync(input.Id);
+		}
+
+
+
+		/// <summary>
+		/// 批量删除@{@data.Entity.Name}的方法
+		/// </summary>
+		@data.ReplaceInfo.PermissionBatchDelete
+		public async Task BatchDelete(List<@data.Entity.EntityKeyName> input)
+		{
+			// TODO:批量删除前的逻辑判断，是否允许删除
+            await _@{@data.Entity.LowerName}Manager.BatchDelete(input);
+		}
+
+
+
+		@if (option.UseExportExcel){
+		<pre>
+		/// <summary>
+		/// 导出@{@data.Entity.EntityDisplayName}为excel文件
+		/// </summary>
+		/// <returns></returns>
+		@data.ReplaceInfo.PermissionExportExcel
+		public async Task<FileDto> GetToExcelFile()
+		{
+		   var @{@data.Entity.LowerName}s = await _@{@data.Entity.LowerName}Manager.Query@{@data.Entity.Name}s().ToListAsync();
+            var @{@data.Entity.LowerName}ListDtos = ObjectMapper.Map<List<@{@data.Entity.Name}ListDto>>(@{@data.Entity.LowerName}s);
+            return _@{@data.Entity.LowerName}ListExcelExporter.ExportToExcelFile(@{@data.Entity.LowerName}ListDtos);
+		}
+
+		</pre>
+
+		}
+
+							//// custom codes
+
+
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+
+    }
+}
+
+

@@ -1,0 +1,18 @@
+
+@{
+    var data = Model.Server;
+}
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Dtos
+{
+    public class PagedSortedAndFilteredInputDto : PagedAndSortedInputDto
+    {
+        public string FilterText { get; set; }
+
+
+
+		 
+		 
+         
+
+    }
+}

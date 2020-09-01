@@ -1,0 +1,302 @@
+@using YoyoSoft.AbpDtoGenerator.HtmlControlNames
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.SPAClient;
+}
+<page-header [title]="l('Manage@{@data.Entity.Name}')"></page-header>
+
+<nz-card [nzBordered]="false">
+    <div class="mb-md">
+        <div nz-row nzGutter="8">
+            <!-- 模糊搜索框 -->
+            <div nz-col nzSpan="8" nzMd="12" nzXs="24" nzSm="24">
+                <input type="text"
+                       nz-input
+                       [(ngModel)]="filterText"
+                       (keyup.enter)="refresh()"
+                       [placeholder]="l('SearchWithThreeDot')" />
+            </div>
+            <!-- 查询和刷新按钮 -->
+            <div nz-col nzSpan="8" nzMd="12" nzXs="24" nzSm="24">
+                <button nz-button nzType="primary" type="submit" (click)="refresh()">
+                    <span>{{ l('Search') }}</span>
+                </button>
+                <button nz-button nzType="default" type="submit" (click)="refreshGoFirstPage()">
+                    {{ l('Reset') }}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="mb-md">
+        <!-- 增强型功能按钮位置 如： 添加、批量删除、导出Excel表 -->
+        <div nz-row nzGutter="8">
+            <div nz-col nzSpan="8" nzMd="12" nzXs="24" nzSm="24" class="btn-gutter">
+
+                @if (data.UsePermission)
+                {
+                <button nz-button [nzType]="'primary'" *ngIf="isGranted('Pages.@{@data.Entity.Name}.Create')" (click)="createOrEdit()">
+                    <i class="iconfont icon-plus"></i>
+                    <span>
+                        {{l("Create")}}
+                    </span>
+                </button>
+                <button nz-button nzType="default" *ngIf="isGranted('Pages.@{@data.Entity.Name}.ExportExcel')" (click)="exportToExcel()">
+                    <i class="iconfont icon-file-excel"></i>
+                    <span>
+                        {{l("ExportToExcel")}}
+                    </span>
+                </button>
+                <ng-container *ngIf="selectedDataItems.length > 0">
+                    <button nz-button [nzType]="'danger'" *ngIf="isGranted('Pages.@{@data.Entity.Name}.BatchDelete')" (click)="batchDelete()">
+                        <i class="iconfont icon-delete"></i>
+                        <span>
+                            {{l("BatchDelete")}}
+                        </span>
+                    </button>
+                </ng-container>
+
+                }
+                else
+                {
+                <button nz-button [nzType]="'primary'" (click)="createOrEdit()">
+                    <i class="iconfont icon-plus"></i>
+                    <span>
+                        {{l("Create")}}
+                    </span>
+                </button>
+
+                <button nz-button nzType="default" (click)="exportToExcel()">
+                    <i class="iconfont icon-file-excel"></i>
+                    <span>
+                        {{l("ExportToExcel")}}
+                    </span>
+                </button>
+                <ng-container *ngIf="selectedDataItems.length > 0">
+                    <button nz-button [nzType]="'danger'" (click)="batchDelete()">
+                        <i class="iconfont icon-delete"></i>
+                        <span>
+                            {{l("BatchDelete")}}
+                        </span>
+                    </button>
+                </ng-container>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- 多选框 判断选择了多少行数据，以及一个刷新按钮 -->
+    <div class="my-md">
+        <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+            <ng-template #message>
+                <span [innerHTML]="l('GridSelectedXItemsTips',selectedDataItems.length)"></span>
+                <a (click)="restCheckStatus(dataList)" class="ml-md">
+                    {{l('ClearEmpty')}}
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="refreshGoFirstPage()">
+                    {{l('Refresh')}}
+                </a>
+            </ng-template>
+        </nz-alert>
+    </div>
+    <!-- 实体的表格内容 -->
+    <div nz-row nzGutter="8" class="my-md">
+        <nz-table #ajaxTable
+                  nzSize="default"
+                  [nzData]="dataList"
+                  [nzTotal]="totalItems"
+                  [(nzPageIndex)]="pageNumber"
+                  [(nzPageSize)]="pageSize"
+                  (nzPageIndexChange)="pageNumberChange()"
+                  [nzPageSizeOptions]="PageSizeOptions"
+                  (nzPageSizeChange)="refresh()"
+                  [nzShowSizeChanger]="true"
+                  [nzShowQuickJumper]="true"
+                  [nzNoResult]="noDataTemplate"
+                  [nzShowTotal]="showTotalTemplate"
+                  [nzFrontPagination]="false"
+                  [nzScroll]="{ x: '1300px', y: '520px' }">
+            <!-- [nzLoading]="isTableLoading" 要开启表格的loading状态，移动代码到上方 -->
+            <!-- 暂无数据组件 -->
+            <ng-template #noDataTemplate>
+                <no-data></no-data>
+            </ng-template>
+            <!-- 分页信息显示 当前 1 页/共 3 页，共 5 条/显示 1-2 条 -->
+            <ng-template #showTotalTemplate let-total let-range="range">
+                {{l('GridFooterDisplayText',pageNumber,totalPages,total,range[0],range[1])}}
+            </ng-template>
+            <!-- 表头 -->
+            <thead (nzSortChange)="gridSort($event)">
+                <tr>
+                    <th nzBreakWord="true"
+                        nzAlign="center"
+                        nzWidth="50px"
+                        nzShowCheckbox
+                        [(nzChecked)]="allChecked"
+                        [nzDisabled]="allCheckboxDisabled"
+                        [nzIndeterminate]="checkboxIndeterminate"
+                        (nzCheckedChange)="checkAll($event)"></th>
+                    @foreach (var item in data.GetListDtoFields())
+                    {
+                    if (item.FieldName == "CreationTime")
+                    {
+                    <th nzShowSort nzSortKey="creationTime" nzWidth="180px" nzAlign="left">
+                        <span>{{l('CreationTime')}}</span>
+                    </th>
+                        }
+                       else if (item.ContrlType==AppYoYoSoftControlNames.Boolean)
+                        {
+                    <th nzShowSort nzSortKey="@item.FieldName" nzWidth="180px" nzAlign="center">
+                        <span>{{l('@{@item.FieldName}')}}</span>
+                    </th>
+                        } 
+                        else
+                        {
+                     <th nzShowSort nzSortKey="@item.FieldName" nzWidth="180px" nzAlign="left">
+                                @{
+                                    if (item.FieldTypeStr == "string")
+                                    {
+                                        var entityFieldName = data.Entity.Name + item.FieldName;
+                                        <span>{{l('@{@entityFieldName}')}}</span>
+                                    }
+                                    else
+                                    {
+                                        <span>{{l('@{@item.FieldName}')}}</span>
+                                    }
+                                }
+                     </th>
+                        }
+                    }
+                    <th nzWidth="230px" nzAlign="center">
+                        <span>{{l('Actions')}}</span>
+                    </th>
+                </tr>
+            </thead>
+            <!-- 表格内容 -->
+            <tbody>
+                <tr *ngFor="let item of ajaxTable.data">
+                    <!-- Checkbox多选框 -->
+                    <td nzAlign="center"
+                        nzShowCheckbox
+                        [(nzChecked)]="item.checked"
+                        (nzCheckedChange)="refreshCheckStatus(dataList)"></td>
+                    @{
+                    var listDtoFields = data.GetListDtoFields();
+
+                    foreach (var item in listDtoFields)
+                    {
+                    if (item.ContrlType == AppYoYoSoftControlNames.DateTimePicker || item.ContrlType == AppYoYoSoftControlNames.DatePicker || item.ContrlType == AppYoYoSoftControlNames.TimePicker)
+                    {
+                    <td nzAlign="left">
+                        <ellipsis lines="2" tooltip>
+                            <span>
+                                {{item.@item.FieldNameFirstLower  |_date}}
+                            </span>
+                        </ellipsis>
+                    </td>
+                    }else 
+
+                    if (item.ContrlType == AppYoYoSoftControlNames.Boolean)
+                    {
+                    <td nzAlign="center">
+                        <nz-badge *ngIf="item.@item.FieldNameFirstLower" nzStatus="success" [nzText]="l('Yes')"></nz-badge>
+                        <nz-badge *ngIf="!item.@item.FieldNameFirstLower" nzStatus="error" [nzText]="l('No')"></nz-badge>
+                    </td>
+                    }
+                    else
+                    {
+                    <td nzAlign="left">
+                        <ellipsis lines="2" tooltip>
+                            <span>
+                                {{item.@item.FieldNameFirstLower}}
+                            </span>
+                        </ellipsis>
+                    </td>
+                    }
+
+                    }
+
+                    }
+                    <td>
+                        <!-- 编辑 -->
+                        @if (data.UsePermission)
+                        {
+                        <ng-container *ngIf="isGranted('Pages.@{@data.Entity.Name}.Edit')">
+                            <a (click)="createOrEdit(item.id)">
+                                <i class="iconfont icon-edit mr-sm"></i>
+                                <span>{{l('Edit')}}</span>
+                            </a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                        </ng-container>
+                        <!-- 更多 -->
+                        <ng-container *ngIf="isGrantedAny('Pages.@{@data.Entity.Name}.Create', 'Pages.@{@data.Entity.Name}.Delete')">
+                            <a nz-dropdown [nzDropdownMenu]="actionDropdownMenu">
+                                <span>{{ l('More') }}</span>
+                                <i class="iconfont icon-down"></i>
+                            </a>
+                            <nz-dropdown-menu #actionDropdownMenu="nzDropdownMenu">
+                                <ul nz-menu>
+                                    <li nz-menu-item>
+                                        <a *ngIf="isGranted('Pages.@{@data.Entity.Name}.Create')" (click)="createOrEdit()">
+                                            <i class="iconfont icon-plus"></i>{{ l('Create') }}
+                                        </a>
+                                    </li>
+                                    <li nz-menu-divider></li>
+                                    <!-- 删除 -->
+                                    <li nz-menu-item *ngIf="isGranted('Pages.@{@data.Entity.Name}.Delete')">
+                                        <a nz-popconfirm
+                                           [nzPopconfirmTitle]="l('ConfirmDeleteWarningMessage')"
+                                           (nzOnConfirm)="delete(item)"
+                                           [nzOkText]="l('Ok')"
+                                           [nzCancelText]="l('Cancel')">
+                                            <i class="iconfont icon-delete mr-sm"></i>
+                                            <span>{{ l('Delete') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nz-dropdown-menu>
+                        </ng-container>
+                        }
+                        else
+                        {
+                        <ng-container>
+                            <a (click)="createOrEdit(item.id)">
+                                <i class="iconfont icon-edit mr-sm"></i>
+                                <span>{{l('Edit')}}</span>
+                            </a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                        </ng-container>
+                        <!-- 更多 -->
+                        <ng-container>
+                            <a nz-dropdown [nzDropdownMenu]="actionDropdownMenu">
+                                <span>{{ l('More') }}</span>
+                                <i class="iconfont icon-down"></i>
+                            </a>
+                            <nz-dropdown-menu #actionDropdownMenu="nzDropdownMenu">
+                                <ul nz-menu>
+                                    <li nz-menu-item>
+                                        <a (click)="createOrEdit()">
+                                            <i class="iconfont icon-plus"></i>{{ l('Create') }}
+                                        </a>
+                                    </li>
+                                    <li nz-menu-divider></li>
+                                    <!-- 删除 -->
+                                    <li nz-menu-item>
+                                        <a nz-popconfirm
+                                           [nzTitle]="l('ConfirmDeleteWarningMessage')"
+                                           (nzOnConfirm)="delete(item)"
+                                           [nzOkText]="l('Ok')"
+                                           [nzCancelText]="l('Cancel')">
+                                            <i class="iconfont icon-delete mr-sm"></i>
+                                            <span>{{ l('Delete') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nz-dropdown-menu>
+                        </ng-container>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-card>

@@ -1,0 +1,33 @@
+@{
+    var data = Model.Server;
+}
+using Abp.Runtime.Validation;
+using @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Dtos;
+using @data.Entity.Namespace;
+
+namespace @{@data.Entity.Namespace}.Dtos
+{
+	/// <summary>
+	/// 获取@{@data.Entity.EntityDisplayName}的传入参数Dto
+	/// </summary>
+    public class Get@{@data.Entity.Name}sInput : PagedSortedAndFilteredInputDto, IShouldNormalize
+    {
+
+        /// <summary>
+        /// 正常化排序使用
+        /// </summary>
+        public void Normalize()
+        {
+            if (string.IsNullOrEmpty(Sorting))
+            {
+                Sorting = "Id";
+            }
+        }
+		
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+    }
+}

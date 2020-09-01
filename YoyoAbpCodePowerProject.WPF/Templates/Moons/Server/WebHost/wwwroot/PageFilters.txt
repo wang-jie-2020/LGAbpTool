@@ -1,0 +1,55 @@
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.Server;
+}
+{
+
+
+"pageFilters": [
+
+@{
+
+var dtos = data.GetEditCheckedDtoFields();
+
+		for (int i = 0; i < dtos.Count; i++)
+		{
+		var fieldType = "";
+			if (dtos[i].FieldTypeStr.Contains("List"))
+			{
+				fieldType = "text";
+			}
+		<pre>
+
+		{
+			"sortNum": "@i",
+			"filterName": "Entity.@{@dtos[i].FieldName}",
+			"queryType": "Contains",
+			"filterTitle": "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.@{@dtos[i].FieldName}",
+			"inputType": "@{@fieldType}",
+			"filterWidth": "3",
+			"isAdvanced": false,
+			"isShow": true
+		},
+
+
+		</pre>
+		
+		
+		
+		
+		
+		
+		}
+
+}
+
+	
+
+
+
+
+]
+
+
+
+}

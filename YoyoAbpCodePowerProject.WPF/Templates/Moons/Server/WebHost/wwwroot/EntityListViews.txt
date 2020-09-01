@@ -1,0 +1,23 @@
+@{
+	@model AbpDtoGenerator.GeneratorModels.ViewModel
+
+	var data = Model.Server;
+}<?xml version="1.0" encoding="utf-8"?>
+<ListView>
+
+@{		var dtos = data.GetEditCheckedDtoFields();
+		for (int i = 0; i < dtos.Count; i++)
+		{var fieldType = "";
+			if (dtos[i].FieldTypeStr.Contains("List"))
+			{
+				fieldType = "text";
+			}
+		<pre>
+		<Column SortNum="@i" Name="@{@dtos[i].FieldName}" Header="Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.@{@dtos[i].FieldName} " Width="140" Align="left" Sortable="true" Show="true" Type="@{@fieldType} " DispFormat="" LinkPath="" LinkParam="" />
+		</pre>
+		}
+
+}
+
+
+</ListView>

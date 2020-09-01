@@ -1,0 +1,26 @@
+﻿@{
+    var data = Model.Server;
+}
+using System.Collections.Generic;
+using L._52ABP.Application.Dtos;
+using @{@data.Entity.Namespace}.Dtos;
+
+namespace @{@data.Entity.Namespace}.Exporting
+{
+    public interface I@{@data.Entity.Name}ListExcelExporter
+    {
+        /// <summary>
+        /// 导出为Excel文件
+        /// </summary>
+        /// <param name="@{@data.Entity.LowerName}ListDtos">传入的@{@data.Entity.EntityDisplayName}数据集合</param>
+        /// <returns></returns>
+        FileDto ExportToExcelFile(List<@{@data.Entity.Name}ListDto> @{@data.Entity.LowerName}ListDtos);
+
+		
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+    }
+}
