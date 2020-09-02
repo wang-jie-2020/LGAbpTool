@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{374C7E2F-CFD9-4352-AF14-BD45BEFED687}</ProjectGuid>
+    <ProjectGuid>{293D5CEF-7EA7-4387-AE25-B7D3465BB288}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbpDtoGenerator</RootNamespace>
-    <AssemblyName>AbpDtoGenerator.Model</AssemblyName>
+    <RootNamespace>AbpDtoGenerator.LGFeature</RootNamespace>
+    <AssemblyName>AbpDtoGenerator.LGFeature</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,13 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>..\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,29 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseModel.cs" />
-    <Compile Include="Base\BaseViewModel.cs" />
-    <Compile Include="Models\LGOptionCfg.cs" />
-    <Compile Include="ViewModels\CodeGenDto.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="GeneratorModels\SPAModel.cs" />
-    <Compile Include="GeneratorModels\TranslatorTextList.cs" />
-    <Compile Include="GeneratorModels\ViewModel.cs" />
-    <Compile Include="Models\BasicOptionCfg.cs" />
-    <Compile Include="Models\EntityFieldModel.cs" />
-    <Compile Include="Models\EntityModel.cs" />
-    <Compile Include="Models\MainExtendedCfg.cs" />
-    <Compile Include="Models\SolutionInfoModel.cs" />
-    <Compile Include="Enums\CodeTemplateType.cs" />
-    <Compile Include="Enums\ProjectType.cs" />
-    <Compile Include="GeneratorModels\CodeTemplateInfo.cs" />
-    <Compile Include="GeneratorModels\GeneratorCodeReplaceInfo.cs" />
-    <Compile Include="GeneratorModels\ProjectPathInfo.cs" />
-    <Compile Include="GeneratorModels\ServerModel.cs" />
-    <Compile Include="ViewModels\PropertySelectorPageModel.cs" />
-    <Compile Include="AppConsts.cs" />
+    <Compile Include="EntityExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AbpDtoGenerator.CodeAnalysis\AbpDtoGenerator.CodeAnalysis.csproj">
+      <Project>{4c16f157-d1a6-4f58-8e1b-f9ecf93e6f5d}</Project>
+      <Name>AbpDtoGenerator.CodeAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbpDtoGenerator.Common\AbpDtoGenerator.Common.csproj">
+      <Project>{ad938e6a-9f1e-4afb-8466-067374e4592c}</Project>
+      <Name>AbpDtoGenerator.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AbpDtoGenerator.Model\AbpDtoGenerator.Model.csproj">
+      <Project>{374c7e2f-cfd9-4352-af14-bd45befed687}</Project>
+      <Name>AbpDtoGenerator.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using AbpDtoGenerator.CodeAnalysis.GeneratorCodeServices;
+using AbpDtoGenerator.LGFeature;
 using AbpDtoGenerator.Models;
 using AbpDtoGenerator.ViewModels;
 using Newtonsoft.Json;
@@ -24,11 +25,21 @@ namespace YoyoAbpCodePowerProject.WPF
 
         public static EntityModel Entity { get; set; }
 
+        public static LGOptionCfg LGOption { get; set; }
+
         public static void InitApplication(string path)
         {
+            Global.LoadLGOptions();
+
             Global.SolutionInfo = JsonConvert.DeserializeObject<SolutionInfoModel>(File.ReadAllText(Global.SolutionPath, Encoding.UTF8));
             Global.LoadEntityInfos();
             Global.CreateViewModels();
+
+            //if (Global.MainViewModel.MainExtendedCfg.IsLGFeature)
+            //{
+            //    Global.MainViewModel.OptionCfg.UseNgZorro = false;
+            //    Global.MainViewModel.OptionCfg.UseXUnitTests = false;
+            //}
         }
 
         private static void LoadEntityInfos()
@@ -49,6 +60,11 @@ namespace YoyoAbpCodePowerProject.WPF
             }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault<string>() : null;
             if (entityModel == null)
             {
+                //if (Global.MainViewModel.MainExtendedCfg.IsLGFeature)
+                //{
+                //    entityModel2.UseLGFeature();
+                //}
+
                 Global.Entity = entityModel2;
                 Global.Entity.ParentDirName = parentDirName;
                 return;
@@ -110,6 +126,26 @@ namespace YoyoAbpCodePowerProject.WPF
             Global.PropertyViewModel = PropertySelectorPageModel.Create(Global.Entity.Properties);
             Global.PropertyViewModel.EntityDisplayName = Global.Entity.EntityDisplayName;
             Global.Option = Global.MainViewModel.OptionCfg;
+            Global.MainViewModel.LGOptionCfg = Global.LGOption;
+        }
+
+        public static void LoadLGOptions()
+        {
+            string text = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "LG");
+            if (!Directory.Exists(text))
+            {
+                Directory.CreateDirectory(text);
+            }
+
+            var optionFile = Path.Combine(text, "Options.json");
+            if (File.Exists(optionFile))
+            {
+                Global.LGOption = JsonConvert.DeserializeObject<LGOptionCfg>(File.ReadAllText(optionFile, Encoding.UTF8));
+            }
+            else
+            {
+                Global.LGOption = new LGOptionCfg();
+            }
         }
     }
 }

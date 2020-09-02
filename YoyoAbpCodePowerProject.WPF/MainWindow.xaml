@@ -168,7 +168,13 @@
 						Foreground="#FF000000"
 						FontSize="14"
 						IsChecked="{Binding MainExtendedCfg.IsXstSolution, Mode=TwoWay}" />
-				</StackPanel>
+                    <CheckBox
+                        Content="棱光"
+                        Margin="10 10 10 0"
+                        Foreground="#FF000000"
+                        FontSize="14"
+                        IsChecked="{Binding LGOptionCfg.IsLGFeature, Mode=TwoWay}" />
+                </StackPanel>
 			</Grid>
 		</Border>
 		<Border

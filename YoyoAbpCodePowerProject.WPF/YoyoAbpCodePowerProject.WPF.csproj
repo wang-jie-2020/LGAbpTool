@@ -151,6 +151,10 @@
       <Project>{ad938e6a-9f1e-4afb-8466-067374e4592c}</Project>
       <Name>AbpDtoGenerator.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AbpDtoGenerator.LGFeature\AbpDtoGenerator.LGFeature.csproj">
+      <Project>{293d5cef-7ea7-4387-ae25-b7d3465bb288}</Project>
+      <Name>AbpDtoGenerator.LGFeature</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AbpDtoGenerator.Model\AbpDtoGenerator.Model.csproj">
       <Project>{374c7e2f-cfd9-4352-af14-bd45befed687}</Project>
       <Name>AbpDtoGenerator.Model</Name>

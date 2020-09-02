@@ -42,6 +42,10 @@ namespace YoyoAbpCodePowerProject.WPF
             string path2 = Path.Combine(text, fileNameWithoutExtension + ".json");
             string content2 = JsonConvert.SerializeObject(Global.Entity);
             path2.CreateFile(content2);
+
+            string lgPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "LG", "Options.json");
+            string lgContent = JsonConvert.SerializeObject(Global.MainViewModel.LGOptionCfg);
+            lgPath.CreateFile(lgContent);
         }
 
         private void Title_MouseDown(object sender, MouseButtonEventArgs e)

@@ -45,6 +45,19 @@ namespace AbpDtoGenerator.ViewModels
             }
         }
 
+        public LGOptionCfg LGOptionCfg
+        {
+            get
+            {
+                return this.lgOptionCfg;
+            }
+            set
+            {
+                this.lgOptionCfg = value;
+                base.InvokePropertyChanged("LGOptionCfg");
+            }
+        }
+
         public static MainPageViewModel Create(SolutionInfoModel model)
         {
             MainPageViewModel mainPageViewModel = new MainPageViewModel();
@@ -64,5 +77,7 @@ namespace AbpDtoGenerator.ViewModels
         private MainExtendedCfg mainExtendedViewModel;
 
         private string versionInfo;
+
+        private LGOptionCfg lgOptionCfg;
     }
 }
