@@ -34,12 +34,6 @@ namespace YoyoAbpCodePowerProject.WPF
             Global.SolutionInfo = JsonConvert.DeserializeObject<SolutionInfoModel>(File.ReadAllText(Global.SolutionPath, Encoding.UTF8));
             Global.LoadEntityInfos();
             Global.CreateViewModels();
-
-            //if (Global.MainViewModel.MainExtendedCfg.IsLGFeature)
-            //{
-            //    Global.MainViewModel.OptionCfg.UseNgZorro = false;
-            //    Global.MainViewModel.OptionCfg.UseXUnitTests = false;
-            //}
         }
 
         private static void LoadEntityInfos()
@@ -60,10 +54,10 @@ namespace YoyoAbpCodePowerProject.WPF
             }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault<string>() : null;
             if (entityModel == null)
             {
-                //if (Global.MainViewModel.MainExtendedCfg.IsLGFeature)
-                //{
-                //    entityModel2.UseLGFeature();
-                //}
+                if (Global.LGOption.IsLGFeature)
+                {
+                    entityModel2.UseLGFeature();
+                }
 
                 Global.Entity = entityModel2;
                 Global.Entity.ParentDirName = parentDirName;
@@ -126,7 +120,13 @@ namespace YoyoAbpCodePowerProject.WPF
             Global.PropertyViewModel = PropertySelectorPageModel.Create(Global.Entity.Properties);
             Global.PropertyViewModel.EntityDisplayName = Global.Entity.EntityDisplayName;
             Global.Option = Global.MainViewModel.OptionCfg;
+
             Global.MainViewModel.LGOptionCfg = Global.LGOption;
+            if (Global.LGOption.IsLGFeature)
+            {
+                Global.MainViewModel.OptionCfg.UseNgZorro = false;
+                Global.MainViewModel.OptionCfg.UseXUnitTests = false;
+            }
         }
 
         public static void LoadLGOptions()
