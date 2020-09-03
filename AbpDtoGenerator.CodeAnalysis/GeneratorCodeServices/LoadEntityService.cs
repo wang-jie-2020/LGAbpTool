@@ -66,6 +66,7 @@ namespace AbpDtoGenerator.CodeAnalysis.GeneratorCodeServices
                                           IsRelation = p.IsRelation(),
                                           IsCollection = p.IsCollection(),
                                           AttributesList = p.AttributeLists.GetFilteredAttributeStringList(),
+                                          Attributes = p.AttributeLists.GetFilteredAttributeList(),
                                           CtrlTypes = new ObservableCollection<string>
                 {
                     "Text",

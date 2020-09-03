@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AbpDtoGenerator.Base;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 
 namespace AbpDtoGenerator.Models
@@ -202,6 +203,9 @@ namespace AbpDtoGenerator.Models
         }
 
         public List<string> AttributesList { get; set; }
+
+        [JsonIgnore]
+        public List<AttributeListSyntax> Attributes { get; set; }
 
         public bool IsSimpleProperty { get; set; }
 
