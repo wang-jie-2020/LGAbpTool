@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using AbpDtoGenerator;
+using AbpDtoGenerator.LGFeature;
 using AbpDtoGenerator.Models;
 using Newtonsoft.Json;
 using YoyoAbpCodePowerProject.WPF.Enums;
@@ -111,7 +112,24 @@ namespace YoyoAbpCodePowerProject.WPF
         private void StartCodeGen()
         {
             Global.Entity.EntityDisplayName = Global.PropertyViewModel.EntityDisplayName;
-            CodeGen.Gen();
+
+            if (Global.MainViewModel.LGOptionCfg.IsLGFeature)
+            {
+                AbpDtoGenerator.LGFeature.Global.SolutionPath = Global.SolutionPath;
+                AbpDtoGenerator.LGFeature.Global.SolutionInfo = Global.SolutionInfo;
+                AbpDtoGenerator.LGFeature.Global.MainViewModel = Global.MainViewModel;
+                AbpDtoGenerator.LGFeature.Global.PropertyViewModel = Global.PropertyViewModel;
+                AbpDtoGenerator.LGFeature.Global.Option = Global.Option;
+                AbpDtoGenerator.LGFeature.Global.Entity = Global.Entity;
+                AbpDtoGenerator.LGFeature.Global.LGOption = Global.LGOption;
+
+                CodeGenExtension.UseLGFeather();
+            }
+            else
+            {
+                CodeGen.Gen();
+            }
+
             base.Close();
         }
     }

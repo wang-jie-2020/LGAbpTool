@@ -47,7 +47,7 @@ namespace AbpDtoGenerator.LGFeature
             #endregion
         }
 
-        public static string GetDisplayName(this List<AttributeListSyntax> attributeGroups)
+        private static string GetDisplayName(this List<AttributeListSyntax> attributeGroups)
         {
             string[] attributeDataAnnotation = { "DisplayName" };
 
@@ -64,7 +64,7 @@ namespace AbpDtoGenerator.LGFeature
             return attributeListSyntax.Attributes.FirstOrDefault()?.ArgumentList?.Arguments.FirstOrDefault()?.ToString();
         }
 
-        public static int? GetMinLength(this List<AttributeListSyntax> attributeGroups)
+        private static int? GetMinLength(this List<AttributeListSyntax> attributeGroups)
         {
             string[] attributeDataAnnotation = { "MinLength", "StringLength" };
 
@@ -90,7 +90,7 @@ namespace AbpDtoGenerator.LGFeature
             return null;
         }
 
-        public static int? GetMaxLength(this List<AttributeListSyntax> attributeGroups)
+        private static int? GetMaxLength(this List<AttributeListSyntax> attributeGroups)
         {
             string[] attributeDataAnnotation = { "MaxLength", "StringLength" };
 
@@ -108,13 +108,13 @@ namespace AbpDtoGenerator.LGFeature
             return null;
         }
 
-        public static List<AttributeListSyntax> GetFilteredAttributeList(
+        private static List<AttributeListSyntax> GetFilteredAttributeList(
             this List<AttributeListSyntax> attributeGroups, string[] attributeDataAnnotation)
         {
             return attributeGroups.Where(a => a.Attributes.Any(att => attributeDataAnnotation.Contains(att.Name.ToString()))).ToList();
         }
 
-        public static List<string> GetFilteredAttributeStringList(
+        private static List<string> GetFilteredAttributeStringList(
             this List<AttributeListSyntax> attributeGroups, string[] attributeDataAnnotation)
         {
             List<AttributeListSyntax> list = attributeGroups.Where(a => a.Attributes.Any(att => attributeDataAnnotation.Contains(att.Name.ToString()))).ToList();

@@ -129,7 +129,7 @@ namespace YoyoAbpCodePowerProject.WPF
             }
         }
 
-        public static void LoadLGOptions()
+        private static void LoadLGOptions()
         {
             string text = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "LG");
             if (!Directory.Exists(text))
