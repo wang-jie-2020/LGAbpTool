@@ -1,0 +1,48 @@
+
+@{
+    var data = Model.Server;
+}
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Authorization
+{
+	/// <summary>
+    /// 定义系统的权限名称的字符串常量。
+    /// <see cref="@{@data.Entity.Name}AuthorizationProvider" />中对权限的定义.
+    ///</summary>
+	public static  class @{@data.Entity.Name}Permissions
+	{
+		/// <summary>
+		/// @{@data.Entity.Name}权限节点
+		///</summary>
+		public const string Pages_@{@data.Entity.ParentDirName}_@{@data.Entity.Name}_Node = "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.Node";          
+
+		/// <summary>
+		/// @{@data.Entity.Name}查询授权
+		///</summary>
+		public const string Pages_@{@data.Entity.ParentDirName}_@{@data.Entity.Name}_Query = "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.Query";
+
+		/// <summary>
+		/// @{@data.Entity.Name}创建权限
+		///</summary>
+		public const string Pages_@{@data.Entity.ParentDirName}_@{@data.Entity.Name}_Create = "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.Create";
+
+		/// <summary>
+		/// @{@data.Entity.Name}修改权限
+		///</summary>
+		public const string Pages_@{@data.Entity.ParentDirName}_@{@data.Entity.Name}_Edit = "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.Edit";
+
+		/// <summary>
+		/// @{@data.Entity.Name}删除权限
+		///</summary>
+		public const string Pages_@{@data.Entity.ParentDirName}_@{@data.Entity.Name}_Delete = "Pages.@{@data.Entity.ParentDirName}.@{@data.Entity.Name}.Delete";
+		 
+		 
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+         
+    }
+
+}
+

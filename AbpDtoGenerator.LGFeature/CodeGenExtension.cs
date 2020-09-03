@@ -15,7 +15,7 @@ namespace AbpDtoGenerator.LGFeature
 {
     public static class CodeGenExtension
     {
-        public static void UseLGFeather()
+        public static void UseLGFeature()
         {
             Gen();
         }
@@ -204,20 +204,20 @@ namespace AbpDtoGenerator.LGFeature
             {
                 string basePath = Global.SolutionInfo.Application_Shared.BasePath;
                 string buildPath = Path.Combine(basePath, entityDir, "I" + entity.Name + "AppService.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\IEntityApplicationService.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\IEntityApplicationService.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", "Get" + entity.Name + "ForEditOutput.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\Dtos\\GetEntityForEditOutput.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\Dtos\\GetEntityForEditOutput.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", entity.Name + "EditDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\Dtos\\EntityEditDto.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\Dtos\\EntityEditDto.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", "Get" + entity.Name + "ForViewDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\Dtos\\GetEntityForViewDto.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\Dtos\\GetEntityForViewDto.txt"), buildPath));
                 basePath = Global.SolutionInfo.Application.BasePath;
                 buildPath = Path.Combine(basePath, entityDir, "Mapper", entity.Name + "DtoAutoMapper.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, entity.Name + "AppService.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Application\\EntityApplicationService.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Application\\EntityApplicationService.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Readme.md");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Readme.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Readme.txt"), buildPath));
                 basePath = Global.SolutionInfo.Host.BasePath;
                 buildPath = Path.Combine(new string[]
                 {
@@ -227,7 +227,7 @@ namespace AbpDtoGenerator.LGFeature
                     "ListViews",
                     entity.ParentDirName + "." + entity.Name + ".xml"
                 });
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\WebHost\\wwwroot\\EntityListViews.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\WebHost\\wwwroot\\EntityListViews.txt"), buildPath));
                 buildPath = Path.Combine(new string[]
                 {
                     basePath,
@@ -236,7 +236,7 @@ namespace AbpDtoGenerator.LGFeature
                     "PageFilters",
                     entity.ParentDirName + "." + entity.Name + ".json"
                 });
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\WebHost\\wwwroot\\PageFilters.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\WebHost\\wwwroot\\PageFilters.txt"), buildPath));
                 if (!option.IsAbpZero && option.UseNgZorro)
                 {
                     buildPath = Path.Combine(new string[]
@@ -248,7 +248,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         "Readme.md"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\Readme.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\Readme.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -259,7 +259,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.less"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityEditViewCss.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityEditViewCss.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -270,7 +270,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.html"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityEditViewHtml.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityEditViewHtml.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -281,7 +281,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.ts"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityEditViewTs.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityEditViewTs.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -291,7 +291,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.less"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityListViewCss.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityListViewCss.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -301,7 +301,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.html"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityListViewHtml.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityListViewHtml.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -311,7 +311,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.ts"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Client\\NGZorro\\EntityListViewTs.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Client\\NGZorro\\EntityListViewTs.txt"), buildPath));
                 }
             }
             if (option.IsAllGeneratorCode || option.UseDomainAuthorizeCode || option.UseDomainManagerCode)
@@ -321,17 +321,17 @@ namespace AbpDtoGenerator.LGFeature
                 if (option.UseDomainAuthorizeCode)
                 {
                     buildPath2 = Path.Combine(basePath2, entityDir, "Authorization", entity.Name + "Permissions.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Domain\\Authorization\\EntityPermissions.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Domain\\Authorization\\EntityPermissions.txt"), buildPath2));
                 }
                 if (option.UseDomainManagerCode)
                 {
                     buildPath2 = Path.Combine(basePath2, entityDir, "DomainService", "I" + entity.Name + "Manager.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Domain\\DomainService\\IEntityManager.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Domain\\DomainService\\IEntityManager.txt"), buildPath2));
                     buildPath2 = Path.Combine(basePath2, entityDir, "DomainService", entity.Name + "Manager.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Domain\\DomainService\\EntityManager.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Domain\\DomainService\\EntityManager.txt"), buildPath2));
                 }
                 buildPath2 = Path.Combine(basePath2, entityDir, "Readme.md");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Moons\\Server\\Readme.txt"), buildPath2));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Moons\\Server\\Readme.txt"), buildPath2));
             }
             return list;
         }
@@ -349,30 +349,30 @@ namespace AbpDtoGenerator.LGFeature
             {
                 string basePath = Global.SolutionInfo.Application.BasePath;
                 string buildPath = Path.Combine(basePath, entityDir, "Mapper", entity.Name + "DtoAutoMapper.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
                 if (option.UseExportExcel)
                 {
                     buildPath = Path.Combine(basePath, entityDir, "Exporting", "I" + entity.Name + "ListExcelExporter.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Exporting\\IEntityListExcelExporter.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Exporting\\IEntityListExcelExporter.txt"), buildPath));
                     buildPath = Path.Combine(basePath, entityDir, "Exporting", entity.Name + "ListExcelExporter.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Exporting\\EntityListExcelExporter.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Exporting\\EntityListExcelExporter.txt"), buildPath));
                 }
                 buildPath = Path.Combine(basePath, entityDir, "I" + entity.Name + "AppService.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\IEntityApplicationService.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\IEntityApplicationService.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, entity.Name + "AppService.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\EntityApplicationService.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\EntityApplicationService.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", "CreateOrUpdate" + entity.Name + "Input.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Dtos\\CreateOrUpdateEntityInput.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Dtos\\CreateOrUpdateEntityInput.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", "Get" + entity.Name + "ForEditOutput.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Dtos\\GetEntityForEditOutput.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Dtos\\GetEntityForEditOutput.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", "Get" + entity.Name + "sInput.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Dtos\\GetEntitysInput.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Dtos\\GetEntitysInput.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", entity.Name + "EditDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Dtos\\EntityEditDto.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Dtos\\EntityEditDto.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Dtos", entity.Name + "ListDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Application\\Dtos\\EntityListDto.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Dtos\\EntityListDto.txt"), buildPath));
                 buildPath = Path.Combine(basePath, entityDir, "Readme.md");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Readme.txt"), buildPath));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Readme.txt"), buildPath));
                 if (option.UseNgZorro)
                 {
                     buildPath = Path.Combine(new string[]
@@ -384,7 +384,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         "Readme.md"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\Readme.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\Readme.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -395,7 +395,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.less"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityEditViewCss.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityEditViewCss.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -406,7 +406,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.html"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityEditViewHtml.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityEditViewHtml.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -417,7 +417,7 @@ namespace AbpDtoGenerator.LGFeature
                         "create-or-edit-" + entity.SplitName,
                         "create-or-edit-" + entity.SplitName + ".component.ts"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityEditViewTs.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityEditViewTs.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -427,7 +427,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.less"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityListViewCss.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Client, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityListViewCss.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -437,7 +437,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.html"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityListViewHtml.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityListViewHtml.txt"), buildPath));
                     buildPath = Path.Combine(new string[]
                     {
                         basePath,
@@ -447,7 +447,7 @@ namespace AbpDtoGenerator.LGFeature
                         uiParentDirName,
                         entity.SplitName + ".component.ts"
                     });
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Client\\NGZorro\\EntityListViewTs.txt"), buildPath));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityListViewTs.txt"), buildPath));
                 }
             }
             if (option.IsAllGeneratorCode || option.UseDomainAuthorizeCode || option.UseDomainManagerCode)
@@ -457,49 +457,49 @@ namespace AbpDtoGenerator.LGFeature
                 if (option.UseDomainAuthorizeCode)
                 {
                     buildPath2 = Path.Combine(basePath2, entityDir, "Authorization", entity.Name + "AuthorizationProvider.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Domain\\Authorization\\EntityAuthorizationProvider.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Domain\\Authorization\\EntityAuthorizationProvider.txt"), buildPath2));
                     buildPath2 = Path.Combine(basePath2, entityDir, "Authorization", entity.Name + "Permissions.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Domain\\Authorization\\EntityPermissions.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Domain\\Authorization\\EntityPermissions.txt"), buildPath2));
                 }
                 if (option.UseDomainManagerCode)
                 {
                     buildPath2 = Path.Combine(basePath2, entityDir, "DomainService", "I" + entity.Name + "Manager.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Domain\\DomainService\\IEntityManager.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Domain\\DomainService\\IEntityManager.txt"), buildPath2));
                     buildPath2 = Path.Combine(basePath2, entityDir, "DomainService", entity.Name + "Manager.cs");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Domain\\DomainService\\EntityManager.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Domain\\DomainService\\EntityManager.txt"), buildPath2));
                     buildPath2 = Path.Combine(basePath2, entityDir, "Duoyuyan.md");
-                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Domain\\Duoyuyan.txt"), buildPath2));
+                    list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Domain\\Duoyuyan.txt"), buildPath2));
                 }
                 buildPath2 = Path.Combine(basePath2, entityDir, "Readme.md");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Readme.txt"), buildPath2));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Readme.txt"), buildPath2));
             }
             string buildPath3 = Path.Combine(Global.SolutionInfo.EF.BasePath, "EntityMapper", entity.Name + "s", entity.Name + "Cfg.cs");
-            list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\EntityFrameworkCore\\EntityMapper\\EntityCfg.txt"), buildPath3));
+            list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\EntityFrameworkCore\\EntityMapper\\EntityCfg.txt"), buildPath3));
             if (option.UseXUnitTests)
             {
                 string buildPath4 = Path.Combine(Global.SolutionInfo.Tests.BasePath, entity.Name + "s", entity.Name + "AppService_Tests.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\Tests\\EntityAppService_Tests.txt"), buildPath4));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Tests\\EntityAppService_Tests.txt"), buildPath4));
             }
             if (option.InitGeneratorCode)
             {
                 string basePath3 = Global.SolutionInfo.Application.BasePath;
                 string buildPath5 = Path.Combine(basePath3, "Dtos", "PagedAndFilteredInputDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\Dtos\\PagedAndFilteredInputDto.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\Dtos\\PagedAndFilteredInputDto.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, "Dtos", "PagedAndSortedInputDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\Dtos\\PagedAndSortedInputDto.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\Dtos\\PagedAndSortedInputDto.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, "Dtos", "PagedInputDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\Dtos\\PagedInputDto.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\Dtos\\PagedInputDto.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, "Dtos", "PagedSortedAndFilteredInputDto.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\Dtos\\PagedSortedAndFilteredInputDto.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\Dtos\\PagedSortedAndFilteredInputDto.txt"), buildPath5));
                 basePath3 = Global.SolutionInfo.Core.BasePath;
                 buildPath5 = Path.Combine(basePath3, "Authorization", "AppLtmPermissions.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\AppLtmPermissions.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\AppLtmPermissions.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, solutionInfoModel.SolutionNamespace + "DomainServiceBase.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\SolutionNameDomainServiceBase.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\SolutionNameDomainServiceBase.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, "AppLtmConsts.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\AppLtmConsts.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\AppLtmConsts.txt"), buildPath5));
                 buildPath5 = Path.Combine(basePath3, "YoYoAbpefCoreConsts.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "Templates\\Server\\InitGeneratorCode\\YoYoAbpefCoreConsts.txt"), buildPath5));
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\InitGeneratorCode\\YoYoAbpefCoreConsts.txt"), buildPath5));
             }
             return list;
         }

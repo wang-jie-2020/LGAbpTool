@@ -1,0 +1,95 @@
+@{
+    var data = Model.Server;
+}
+using @{@data.Entity.Namespace};
+using @{@data.Entity.Namespace}.Dtos;
+using Microsoft.EntityFrameworkCore;
+using Shouldly;
+using System;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Tests.@{@data.Entity.Name}s
+{
+    public class @{@data.Entity.Name}AppService_Tests : @{@data.ReplaceInfo.SolutionNamespace}TestBase
+    {
+        private readonly I@{@data.Entity.Name}AppService _@{@data.Entity.LowerName}AppService;
+
+        public @{@data.Entity.Name}AppService_Tests()
+        {
+            _@{@data.Entity.LowerName}AppService = Resolve<I@{@data.Entity.Name}AppService>();
+        }
+
+        [Fact]
+        public async Task Create@{@data.Entity.Name}_Test()
+        {
+            await _@{@data.Entity.LowerName}AppService.CreateOrUpdate(new CreateOrUpdate@{@data.Entity.Name}Input
+            {
+                <pre> @{@data.Entity.Name} = new @{@data.Entity.Name}EditDto</pre>    
+                {
+						   
+
+				   @{
+                    foreach (var item in data.Entity.Properties)
+                    {
+                        var fieldTypeStr = item.FieldTypeStr;
+                        if (fieldTypeStr == "string")
+                        {
+                            <pre>@item.FieldName = "test",</pre>
+
+                        }
+                        if (fieldTypeStr == "DateTime")
+                        {
+                            <pre>@item.FieldName = DateTime.Now,</pre>
+
+                        }
+
+                        if (fieldTypeStr.Contains("Type") || fieldTypeStr.Contains("Enum"))
+                        {
+                            <pre>// 枚举类型需要自己添加完善</pre>
+
+                        }
+
+                        if (fieldTypeStr=="float")
+                        {
+                            <pre>@item.FieldName = 1,</pre>
+                        }
+
+                    }
+                }
+
+                }
+            });
+
+            await UsingDbContextAsync(async context =>
+            {
+                var dystopia@{@data.Entity.Name} = await context.@{@data.Entity.Name}s.FirstOrDefaultAsync();
+                dystopia@{@data.Entity.Name}.ShouldNotBeNull();
+            }
+            );
+        }
+
+        [Fact]
+        public async Task Get@{@data.Entity.Name}s_Test()
+        {
+            // Act
+            var output = await _@{@data.Entity.LowerName}AppService.GetPaged(new Get@{@data.Entity.Name}sInput
+            {
+                MaxResultCount = 20,
+                SkipCount = 0
+            });
+
+            // Assert
+            output.Items.Count.ShouldBeGreaterThanOrEqualTo(0);
+        }
+
+		
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+
+
+    }
+}

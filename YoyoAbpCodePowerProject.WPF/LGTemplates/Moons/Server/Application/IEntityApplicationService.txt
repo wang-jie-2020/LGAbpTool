@@ -1,0 +1,66 @@
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+
+@{
+    var data = Model.Server;
+    var option = Model.MainWindowsOptionCfg;
+}
+using System;
+using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using @{@data.Entity.Namespace}.Dtos;
+using @data.Entity.Namespace;
+using @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Dto;
+
+
+
+namespace @data.Entity.Namespace
+{
+    /// <summary>
+    /// @{@data.Entity.EntityDisplayName}应用层服务的接口方法
+    ///</summary>
+    public interface I@{@data.Entity.Name}AppService : IApplicationService
+    {
+        /// <summary>
+		/// 获取@{@data.Entity.EntityDisplayName}的分页列表集合
+		///</summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<PagedResultDto<Get@{@data.Entity.Name}ForViewDto>> GetPaged(XSTQueryDataDto input);
+
+
+	
+
+        /// <summary>
+        /// 返回实体@{@data.Entity.EntityDisplayName}的EditDto
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<Get@{@data.Entity.Name}ForEditOutput> GetForEdit(@data.Entity.EntityKeyName input);
+
+
+        /// <summary>
+        /// 添加或者修改@{@data.Entity.EntityDisplayName}的公共方法
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<@data.Entity.EntityKeyName> CreateOrUpdate(Get@{@data.Entity.Name}ForViewDto input);
+
+
+        /// <summary>
+        /// 删除@{@data.Entity.EntityDisplayName}
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task Delete(List<@data.Entity.EntityKeyName> input);
+
+		 
+		
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+    }
+}

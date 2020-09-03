@@ -123,7 +123,7 @@ namespace YoyoAbpCodePowerProject.WPF
                 AbpDtoGenerator.LGFeature.Global.Entity = Global.Entity;
                 AbpDtoGenerator.LGFeature.Global.LGOption = Global.LGOption;
 
-                CodeGenExtension.UseLGFeather();
+                CodeGenExtension.UseLGFeature();
             }
             else
             {

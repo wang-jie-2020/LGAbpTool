@@ -1,0 +1,115 @@
+@using System.Text
+@using YoyoSoft.AbpDtoGenerator.HtmlControlNames
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.Server;
+        var listCheckedDto = data.GetListDtoFields();
+
+}
+using System;
+using System.Collections.Generic;
+using Abp.Application.Services;
+using L._52ABP.Application.Dtos;
+using L._52ABP.Common.Extensions.Enums;
+
+using @{@data.ReplaceInfo.CompanyNamespace@data.ReplaceInfo.SolutionNamespace}.DataExporting.Excel.Epplus;
+using @{@data.ReplaceInfo.CompanyNamespace@data.ReplaceInfo.SolutionNamespace}.DataFileObjects.DataTempCache;
+using @{@data.Entity.Namespace}.Dtos;
+
+
+namespace @{@data.Entity.Namespace}.Exporting
+{
+    /// <summary>
+    /// @{@data.Entity.EntityDisplayName}的视图模型根据业务需要可以导出为Excel文件
+    /// </summary>
+	[RemoteService(IsEnabled = false)]
+    public class @{@data.Entity.Name}ListExcelExporter : EpplusExcelExporterBase, I@{@data.Entity.Name}ListExcelExporter
+    {       
+        /// <summary>
+        /// 构造函数，需要继承父类
+        /// </summary>
+        /// <param name="dataTempFileCacheManager"></param>
+        public @{@data.Entity.Name}ListExcelExporter(IDataTempFileCacheManager dataTempFileCacheManager):base(dataTempFileCacheManager)
+        {
+
+        }
+        public FileDto ExportToExcelFile(List<@{@data.Entity.Name}ListDto> @{@data.Entity.LowerName}ListDtos)
+        {
+
+    var fileExportName = L("@{@data.Entity.Name}List") + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+
+            var excel =
+                 CreateExcelPackage(fileExportName, excelpackage =>
+               {
+                   var sheet = excelpackage.Workbook.Worksheets.Add(L("@{@data.Entity.Name}s"));
+
+                   sheet.OutLineApplyStyle = true;
+			  @{
+               if (listCheckedDto.Count > 0)
+
+        {
+            StringBuilder addHeaderBuilder = new StringBuilder();
+            addHeaderBuilder.Append(@"AddHeader(sheet");
+            for (int i = 0; i < listCheckedDto.Count; i++)
+            {
+                var startStr = "";
+                if (data.Entity.Properties[i].FieldTypeStr== "string")
+                {
+                    startStr = @",L(""" +data.Entity.Name + data.Entity.Properties[i].FieldName;
+                }
+                else
+                {
+                    startStr = @",L(""" + data.Entity.Properties[i].FieldName;
+                }
+                var endStr = startStr + @""")";
+                addHeaderBuilder.Append(endStr);
+            }
+            addHeaderBuilder.Append(@");");
+            var printaddHeaderString = "\r\t\t\t" + addHeaderBuilder + "\r\n";
+            @printaddHeaderString
+            //addHeaderBuilder生成AddHeader(sheet,L("Name"),L("Type"),L("PublishDate"),L("Price"));的代码段
+
+            <pre>AddObject(sheet, 2, @{@data.Entity.LowerName}ListDtos</pre>
+            var timeCount = new List<int>();
+
+            for (int i = 0; i < listCheckedDto.Count; i++)
+    {
+        var FieldTypeStr = data.Entity.Properties[i].FieldTypeStr;
+        if (FieldTypeStr == "DateTime")
+        {
+       
+            timeCount.Add(i + 1);
+        }         
+
+       if (data.Entity.Properties[i].ContrlType == AppYoYoSoftControlNames.Enums)
+        {
+            var enumFieldName = "\t\t\t,ex => ex." + data.Entity.Properties[i].FieldName + ".ToDescription()" + "\r\n";
+                    @enumFieldName
+                }
+        else
+        {
+            <pre> ,ex => ex.@data.Entity.Properties[i].FieldName </pre>
+        }
+     }
+
+                   <pre>);</pre>
+				   
+							
+
+            foreach (var item in timeCount)
+            {
+            <pre>sheet.Column(@item).Style.Numberformat.Format = "yyyy-mm-dd";</pre>              
+
+            }
+        }
+    }
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+	  });
+    return excel;
+        }
+    }
+}

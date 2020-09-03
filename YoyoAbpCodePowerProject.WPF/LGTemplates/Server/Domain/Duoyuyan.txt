@@ -1,0 +1,100 @@
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.Server;
+}
+
+# 配置52ABP-PRO的多语言
+ 
+ 
+**请注意：**
+- 从52ABP-PRO 2.5.0的版本开始默认采用json配置多语言
+- 属性名和字段不能重复否则框架会验证失败，需要你删除重复的键名
+
+## Json的配置方法如下
+
+在@{@data.ReplaceInfo.SolutionNamespace}.Core类库中，找到路径为 Localization->SourceFiles->Json文件夹下的对应文件
+
+### 中文本地化的内容Chinese localized content
+
+找到Json文件夹下的@{@data.ReplaceInfo.SolutionNamespace}-zh-Hans.json文件，复制以下代码进入即可。
+
+> 请注意防止键名重复，产生异常
+
+```json
+                    <pre>//@{@data.Entity.EntityDisplayName}的多语言配置==>中文</pre>
+        @{
+            foreach (var item in data.Entity.Properties)
+            {
+                if (item.EditChecked || item.ListChecked)
+                {
+                    if (item.FieldTypeStr=="string")
+                    {
+                    <pre>
+                     "@{@data.Entity.Name@item.FieldName}": "@item.FieldDisplayName",
+                    "@{@data.Entity.Name@item.FieldName}InputDesc": "请输入@{@item.FieldDisplayName}",
+                    </pre> 
+                    }
+                    else{string tmpStr = "\"" + item.FieldName + "\": \"" + item.FieldDisplayName + "\",\r\n";
+                        @tmpStr
+                    }       
+                }
+            }       
+					 <pre>                    
+                    "@{@data.Entity.Name}": "@{@data.Entity.EntityDisplayName}",
+                    "Manage@{@data.Entity.Name}": "管理@{@data.Entity.EntityDisplayName}",
+                    "Query@{@data.Entity.Name}": "查询@{@data.Entity.EntityDisplayName}",
+                    "Create@{@data.Entity.Name}": "添加@{@data.Entity.EntityDisplayName}",
+                    "Edit@{@data.Entity.Name}": "编辑@{@data.Entity.EntityDisplayName}",
+                    "Delete@{@data.Entity.Name}": "删除@{@data.Entity.EntityDisplayName}",
+                    "BatchDelete@{@data.Entity.Name}": "批量删除@{@data.Entity.EntityDisplayName}",
+                    "Export@{@data.Entity.Name}": "导出@{@data.Entity.EntityDisplayName}",
+                    "@{@data.Entity.Name}List": "@{@data.Entity.EntityDisplayName}列表",
+                     //@{@data.Entity.EntityDisplayName}的多语言配置==End
+                    </pre>
+
+
+        }
+
+```
+
+
+### 英语本地化的内容English localized content
+找到Json文件夹下的@{@data.ReplaceInfo.SolutionNamespace}.json文件，复制以下代码进入即可。
+```json
+             <pre>//@{@data.Entity.EntityDisplayName}的多语言配置==>英文</pre>
+        @{
+            foreach (var item in data.Entity.Properties)
+            {
+                if (item.EditChecked || item.ListChecked)
+                {
+                    if (item.FieldTypeStr=="string")
+                    {
+                    <pre>
+                     "@{@data.Entity.Name@item.FieldName}": "@{@data.Entity.Name@item.FieldName}",
+                    "@{@data.Entity.Name@item.FieldName}InputDesc": "Please input your @{@data.Entity.Name@item.FieldName}",
+                    </pre> 
+                    }
+                    else{string tmpStr = "\"" + item.FieldName + "\": \"" + item.FieldName + "\",\r\n";
+                        @tmpStr
+                    }       
+                }
+            }       
+					 <pre>                    
+                    "@{@data.Entity.Name}": "@{@data.Entity.Name}",
+                    "Manage@{@data.Entity.Name}": "Manage@{@data.Entity.Name}",
+                    "Query@{@data.Entity.Name}": "Query@{@data.Entity.Name}",
+                    "Create@{@data.Entity.Name}": "Create@{@data.Entity.Name}",
+                    "Edit@{@data.Entity.Name}": "Edit@{@data.Entity.Name}",
+                    "Delete@{@data.Entity.Name}": "Delete@{@data.Entity.Name}",
+                    "BatchDelete@{@data.Entity.Name}": "BatchDelete@{@data.Entity.Name}",
+                    "Export@{@data.Entity.Name}": "Export@{@data.Entity.Name}",
+                    "@{@data.Entity.Name}List": "@{@data.Entity.Name}List",
+                     //@{@data.Entity.EntityDisplayName}的多语言配置==End
+                    </pre>
+
+
+        }
+
+
+
+```

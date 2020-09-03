@@ -1,0 +1,38 @@
+@{
+    var data = Model.Server;
+}
+@{
+    System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+    stringBuilder.AppendLine("");
+    foreach (var prop in data.Entity.Properties)
+    {
+        stringBuilder.AppendLine("\t\t\tbuilder.Property(a => a." + prop.FieldName + ").HasMaxLength(YoYoAbpefCoreConsts.EntityLengthNames.Length64);");
+    }
+}
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using @data.Entity.Namespace;
+
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.EntityMapper.@{@data.Entity.Name}s
+{
+    public class @{@data.Entity.Name}Cfg : IEntityTypeConfiguration<@data.Entity.Name>
+    {
+        public void Configure(EntityTypeBuilder<@data.Entity.Name> builder)
+        {
+
+			 
+      //   builder.ToTable("@{@data.Entity.Name}s", YoYoAbpefCoreConsts.SchemaNames.CMS);
+        builder.ToTable("@{@data.Entity.Name}s");
+
+            //可以自定义配置参数内容
+			
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+        }
+    }
+}
+
+

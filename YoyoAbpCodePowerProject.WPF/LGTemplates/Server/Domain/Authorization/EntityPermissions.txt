@@ -1,0 +1,59 @@
+﻿
+@{
+    var data = Model.Server;
+}
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Authorization
+{
+	/// <summary>
+    /// 定义系统的权限名称的字符串常量。
+    /// <see cref="@{@data.Entity.Name}AuthorizationProvider" />中对权限的定义.
+    ///</summary>
+	public static  class @{@data.Entity.Name}Permissions
+	{
+		/// <summary>
+		/// @{@data.Entity.Name}权限节点
+		///</summary>
+		public const string Node = "Pages.@{@data.Entity.Name}";
+
+		/// <summary>
+		/// @{@data.Entity.Name}查询授权
+		///</summary>
+		public const string Query = "Pages.@{@data.Entity.Name}.Query";
+
+		/// <summary>
+		/// @{@data.Entity.Name}创建权限
+		///</summary>
+		public const string Create = "Pages.@{@data.Entity.Name}.Create";
+
+		/// <summary>
+		/// @{@data.Entity.Name}修改权限
+		///</summary>
+		public const string Edit = "Pages.@{@data.Entity.Name}.Edit";
+
+		/// <summary>
+		/// @{@data.Entity.Name}删除权限
+		///</summary>
+		public const string Delete = "Pages.@{@data.Entity.Name}.Delete";
+
+        /// <summary>
+		/// @{@data.Entity.Name}批量删除权限
+		///</summary>
+		public const string BatchDelete = "Pages.@{@data.Entity.Name}.BatchDelete";
+
+		/// <summary>
+		/// @{@data.Entity.Name}导出Excel
+		///</summary>
+		public const string ExportExcel="Pages.@{@data.Entity.Name}.ExportExcel";
+
+		 
+		 
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+         
+    }
+
+}
+

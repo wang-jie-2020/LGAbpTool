@@ -1,0 +1,22 @@
+﻿
+@{
+    var data = Model.Server;
+}
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using @data.Entity.Namespace;
+
+namespace @{@data.Entity.Namespace}.Dtos
+{
+    public class CreateOrUpdate@{@data.Entity.Name}Input
+    {
+        [Required]
+        public @{@data.Entity.Name}EditDto @{@data.Entity.Name} { get; set; }
+							
+							//// custom codes
+									
+							
+							@{@ViewBag.OldCustomCode}
+							//// custom codes end
+    }
+}

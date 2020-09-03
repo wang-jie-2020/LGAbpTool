@@ -1,0 +1,214 @@
+@using AbpDtoGenerator
+@using YoyoSoft.AbpDtoGenerator.HtmlControlNames
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.SPAClient;
+    var sharp = "#";
+
+}
+<form nz-form #validateForm="ngForm" (ngSubmit)="submitForm()" nzLayout="horizontal" autocomplete="off">
+    <!-- 模态框头部 -->
+    <div class="modal-header">
+        <div class="modal-title">
+            <i class="iconfont icon-medicine-box mr-sm"></i>
+            <span *ngIf="entity.id">{{l('Edit')}}</span>
+            <span *ngIf="!entity.id">{{l('Create')}}</span>
+        </div>
+    </div>
+    <!-- 模态框内容 -->
+    <fieldset>
+        <!-- 提示信息 -->
+        <!-- <nz-alert nzType="info" nzCloseable [nzShowIcon]="true" nzMessage="l('我想提示点什么内容给你说')"></nz-alert> -->
+        @{
+            var editCheckedDto = data.GetEditCheckedDtoFields();
+            foreach (var item in editCheckedDto)
+            {
+                 //如果是string类型就这样渲染
+                //实体是book，字段为name，生成的结果是bookname，配合多语言生成
+                var entityFieldName = data.Entity.Name + item.FieldName;
+                var entityFieldNameInputdesc = data.Entity.Name + item.FieldName+ "InputDesc";
+
+
+                string val = string.Empty;
+                if (item.Required)
+                {
+                    val += " required ";
+                }
+                if (item.MaxLength.HasValue)
+                {
+                    val += " maxlength='" + item.MaxLength.Value + "' ";
+                }
+                if (item.MinLength.HasValue)
+                {
+                    val += " minlength='" + item.MinLength.Value + "' ";
+                }
+
+                   <!-- @item.FieldDisplayName : @item.FieldName 的控件范围=Start= -->
+                <nz-form-item nz-row>
+                     @if (item.Required)
+                    {
+                        <nz-form-label nz-col [nzSm]="6" [nzXs]="24" nzRequired nzFor="@item.FieldNameFirstLower">
+                            {{l('@(item.FieldTypeStr == "string"? entityFieldName : item.FieldName)')}}
+                        </nz-form-label>
+                    }
+                    else
+                    {
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="@item.FieldNameFirstLower">  
+                            {{l('@(item.FieldTypeStr == "string" ? entityFieldName : item.FieldName)')}}
+                            </nz-form-label>
+                    }
+                    <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                        <!--  控件位置 -->
+                        @{
+                            string sharpAndfirstLowerFieldName = sharp + item.FieldNameFirstLower;
+                            @*<nz-input-group nzPrefixIcon="iconfont icon-home">*@
+                            if (item.ContrlType == "Text")
+                            {
+                                <input nz-input name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                       [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                      [placeholder]="l('@entityFieldNameInputdesc')" @val>
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.Enums)
+                            {
+                                <nz-radio-group name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                                [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                                style="width: 100%;" [nzButtonStyle]="'solid'">
+                                    <label nz-radio-button *ngFor="let item of @{@item.FieldTypeStrFirstCharToLower}TypeEnum" [nzValue]="item.value">{{ item.key }} </label>
+                                </nz-radio-group>
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.Switch || item.ContrlType == AppYoYoSoftControlNames.Boolean)
+                            {
+
+                                <nz-switch name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                           [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                           [nzCheckedChildren]="checkedTemplate"
+                                           [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
+								<ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+								<ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+ 
+
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.Double || item.ContrlType == AppYoYoSoftControlNames.Float)
+                            {
+                                <nz-input-number name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                                 [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                                 [nzMin]="0"
+												 [nzMax]="1000000"
+                                                 [nzStep]="0.1"
+                                                 [nzPlaceHolder]="'Digital'"></nz-input-number>
+                            }else if (item.ContrlType == AppYoYoSoftControlNames.Long || item.ContrlType == AppYoYoSoftControlNames.Int)
+                            {
+                                <nz-input-number
+                                    name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                    [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                    [nzMin]="0"
+                                    [nzMax]="1000000"
+                                    [nzStep]="1"
+                                ></nz-input-number>
+                            }
+                            else if (item.ContrlType == "Textarea")
+                            {
+                                <textarea nz-input name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                          [(ngModel)]="entity.@{@item.FieldNameFirstLower}"
+                                           [placeholder]="l('@entityFieldNameInputdesc')" nzAutosize @val></textarea>
+                            }
+                            else if (item.ContrlType == "UEditor")
+                            {
+
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.DateTimePicker)
+                            {
+                                <app-date-picker nzShowTime
+                                                 nzFormat="yyyy-MM-dd HH:mm:ss"
+                                                 nzPlaceHolder="l('PleaseSelectTime')"
+                                                 name="@item.FieldNameFirstLower"
+                                                 @sharpAndfirstLowerFieldName="ngModel"
+                                                 [(ngModel)]="entity.@{@item.FieldNameFirstLower}"></app-date-picker>
+
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.DatePicker)
+                            {
+                                <app-date-picker name="@item.FieldNameFirstLower"
+                                                 @sharpAndfirstLowerFieldName="ngModel"
+                                                 [(ngModel)]="entity.@{@item.FieldNameFirstLower}"></app-date-picker>
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.TimePicker)
+                            {
+                                //todo:有bug需要完善
+
+                                <app-time-picker name="@item.FieldNameFirstLower"
+                                                 @sharpAndfirstLowerFieldName="ngModel"
+                                                 [(ngModel)]="entity.@{@item.FieldNameFirstLower}">
+                                </app-time-picker>
+
+                            }
+                            else if (item.ContrlType == "DateRange")
+                            {
+
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.DropdownList)
+                            {
+                                <nz-select name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                           [(ngModel)]="entity.@{@item.FieldNameFirstLower}" nzAllowClear
+                                           [nzPlaceHolder]="l('PleaseSelectAtLeastOneItem')" @val style="width: 120px;">
+                                    <!-- 请配置你的数据源 -->
+                                    <!-- <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label">
+                                    </nz-option>                    -->
+                                </nz-select>
+                            }
+                            else if (item.ContrlType == AppYoYoSoftControlNames.Checkbox)
+                            {
+                                <label nz-checkbox name="@item.FieldNameFirstLower" @sharpAndfirstLowerFieldName="ngModel"
+                                       [(ngModel)]="entity.@{@item.FieldNameFirstLower}" @val>{{l('@item.FieldName')}}</label>
+                            }
+                                @*</nz-input-group>*@
+                            //else if (item.ContrlType == "InputTag")
+                            //{
+
+                            //}
+                            //else if (item.ContrlType == "ImgUpload")
+                            //{
+
+                            //}
+                            //else if (item.ContrlType == "ImgMultiUpload")
+                            //{
+
+                            //}
+                            //else if (item.ContrlType == "FileUpload")
+                            //{
+
+                            //}
+                        }
+                        @{
+                            if (item.MaxLength.HasValue || item.MinLength.HasValue || item.Required)
+                            {
+                                <!-- 校验 -->
+                                <nz-form-explain *ngIf="@{@item.FieldNameFirstLower}.control.dirty
+                                                 &&@{@item.FieldNameFirstLower}.control.errors">
+                                    @if (item.MaxLength.HasValue)
+                                    {<ng-container *ngIf="@{@item.FieldNameFirstLower}.control.hasError('maxlength')">{{l('MaxLength')+@item.MaxLength.Value}}</ng-container>}
+                                    @if (item.MinLength.HasValue)
+                                    {<ng-container *ngIf="@{@item.FieldNameFirstLower}.control.hasError('minlength')">{{l('MinLength')+@item.MinLength.Value}}</ng-container>}
+                                    @if (item.Required)
+                                    {<ng-container *ngIf="@{@item.FieldNameFirstLower}.control.hasError('required')">{{l('ThisFieldIsRequired')}}</ng-container>}
+                                </nz-form-explain>
+                            }
+
+                        }
+                    </nz-form-control>
+             
+                </nz-form-item>
+                <!--@item.FieldDisplayName : @item.FieldName 的控件范围结束=END= -->
+            }
+        }
+    </fieldset>
+    <!-- 模态框底部 -->
+    <div class="modal-footer">
+        <button nz-button [nzType]="'default'" type="button" (click)="close()" [disabled]="saving">
+            <i class="iconfont icon-close-circle"></i> {{l("Cancel")}}
+        </button>
+        <button nz-button [nzType]="'primary'" type="submit" [disabled]="!validateForm.form.valid|| saving" [nzLoading]="saving">
+            <i class="iconfont icon-save" *ngIf="!saving"></i> {{l("Save")}}
+        </button>
+    </div>
+</form>
