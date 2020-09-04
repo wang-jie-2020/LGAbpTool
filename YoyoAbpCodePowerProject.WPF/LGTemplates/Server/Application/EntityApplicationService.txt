@@ -34,7 +34,7 @@ namespace @data.Entity.Namespace
     [AbpAuthorize]
     public class @{@data.Entity.Name}AppService : @{@data.ReplaceInfo.SolutionNamespace}AppServiceBase, I@{@data.Entity.Name}AppService
     {
-        private readonly IRepository<@{@data.Entity.Name}, @data.Entity.EntityKeyName> _@{@data.Entity.LowerName}Repository;
+	    <pre>@data.ReplaceInfo.PrivateIEntityNameManager</pre>   
         @if(option.UseExportExcel) 
 		{
 		<pre>private readonly I@{@data.Entity.Name}ListExcelExporter _@{@data.Entity.LowerName}ListExcelExporter;</pre>  
@@ -43,13 +43,11 @@ namespace @data.Entity.Namespace
 		{
 		<pre>private readonly IEnumExtensionsAppService _enumExtensionsAppService;</pre>    
 		}
-        <pre>@data.ReplaceInfo.PrivateIEntityNameManager</pre>   
 
         /// <summary>
         /// 构造函数
         ///</summary>
-        public @{@data.Entity.Name}AppService(IRepository<@{@data.Entity.Name}, @data.Entity.EntityKeyName>  @{@data.Entity.LowerName}Repository
-              @data.ReplaceInfo.IEntityNameManager       
+        public @{@data.Entity.Name}AppService(I@{@data.Entity.Name}Manager @{@data.Entity.LowerName}Manager    
               @if (option.UseExportExcel)
 			  {
 			  <pre>, @{@data.Entity.Name}ListExcelExporter @{@data.Entity.LowerName}ListExcelExporter</pre>
@@ -59,7 +57,6 @@ namespace @data.Entity.Namespace
 			  <pre>, IEnumExtensionsAppService enumExtensionsAppService</pre>
 			  }<pre>)</pre>
         {
-			_@{@data.Entity.LowerName}Repository = @{@data.Entity.LowerName}Repository;
 			@data.ReplaceInfo.EntityNameManager
 			@if (option.UseExportExcel)
 			{
@@ -79,7 +76,7 @@ namespace @data.Entity.Namespace
         @data.ReplaceInfo.PermissionQuery
         public async Task<PagedResultDto<@{@data.Entity.Name}ListDto>> GetPaged(Get@{@data.Entity.Name}sInput input)
 		{
-		    var query = _@{@data.Entity.LowerName}Repository.GetAll()
+		    var query = _@{@data.Entity.LowerName}Manager.QueryAll()
 					@{ 
 						foreach (var item in data.Entity.Properties)
 						{	
@@ -107,7 +104,7 @@ namespace @data.Entity.Namespace
 		@data.ReplaceInfo.PermissionQuery
 		public async Task<@{@data.Entity.Name}ListDto> GetById(EntityDto<@data.Entity.EntityKeyName> input)
 		{
-			var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id);
+			var entity = await _@{@data.Entity.LowerName}Manager.Find(input.Id);
 
 			var dto = ObjectMapper.Map<@{@data.Entity.Name}ListDto>(entity);
 			return dto;
@@ -126,7 +123,7 @@ namespace @data.Entity.Namespace
 
 			if (input.Id.HasValue)
 			{
-				var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id.Value);
+				var entity = await _@{@data.Entity.LowerName}Manager.Find(input.Id.Value);
 				editDto = ObjectMapper.Map<@{@data.Entity.Name}EditDto>(entity);
 			}
 			else
@@ -170,7 +167,7 @@ namespace @data.Entity.Namespace
 		protected virtual async Task<@{@data.Entity.Name}EditDto> Create(@{@data.Entity.Name}EditDto input)
 		{
             var entity = ObjectMapper.Map<@{@data.Entity.Name}>(input);
-            entity = await _@{@data.Entity.LowerName}Manager.CreateAsync(entity);
+            entity = await _@{@data.Entity.LowerName}Manager.Create(entity);
 
             var dto = ObjectMapper.Map<@{@data.Entity.Name}EditDto>(entity);
             return dto;
@@ -182,10 +179,10 @@ namespace @data.Entity.Namespace
 		@data.ReplaceInfo.PermissionEdit
 		protected virtual async Task Update(@{@data.Entity.Name}EditDto input)
 		{
-			var entity = await _@{@data.Entity.LowerName}Repository.GetAsync(input.Id.Value);
+			var entity = await _@{@data.Entity.LowerName}Manager.Find(input.Id.Value);
             ObjectMapper.Map(input, entity);
 
-            await _@{@data.Entity.LowerName}Manager.UpdateAsync(entity);
+            await _@{@data.Entity.LowerName}Manager.Update(entity);
 		}
 
 		/// <summary>
@@ -196,7 +193,7 @@ namespace @data.Entity.Namespace
 		@data.ReplaceInfo.PermissionDelete
 		public async Task Delete(EntityDto<@data.Entity.EntityKeyName> input)
 		{
-            await _@{@data.Entity.LowerName}Manager.DeleteAsync(input.Id);
+            await _@{@data.Entity.LowerName}Manager.Delete(input.Id);
 		}
 
 		/// <summary>
@@ -217,7 +214,7 @@ namespace @data.Entity.Namespace
 		@data.ReplaceInfo.PermissionExportExcel
 		public async Task<FileDto> GetToExcelFile()
 		{
-			var @{@data.Entity.LowerName}s = await _@{@data.Entity.LowerName}Manager.Query@{@data.Entity.Name}s().ToListAsync();
+			var @{@data.Entity.LowerName}s = await _@{@data.Entity.LowerName}Manager.QueryAll().ToListAsync();
 			var @{@data.Entity.LowerName}ListDtos = ObjectMapper.Map<List<@{@data.Entity.Name}ListDto>>(@{@data.Entity.LowerName}s);
             return _@{@data.Entity.LowerName}ListExcelExporter.ExportToExcelFile(@{@data.Entity.LowerName}ListDtos);
 		}

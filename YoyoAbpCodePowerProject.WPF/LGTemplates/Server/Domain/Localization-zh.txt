@@ -1,0 +1,38 @@
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.Server;
+}
+
+{
+    @{
+        foreach (var item in data.Entity.Properties)
+        {
+            if (item.EditChecked || item.ListChecked)
+            {
+                if (item.FieldTypeStr=="string")
+                {
+                <pre>
+                    "@{@data.Entity.Name@item.FieldName}": "@item.FieldDisplayName",
+                    "@{@data.Entity.Name@item.FieldName}InputDesc": "请输入@{@item.FieldDisplayName}",
+                </pre> 
+                }
+                else
+                {
+                    string tmpStr = "\"" + item.FieldName + "\": \"" + item.FieldDisplayName + "\",\r\n";
+                    @tmpStr
+                }       
+            }
+        }       
+	    <pre>                    
+            "@{@data.Entity.Name}": "@{@data.Entity.EntityDisplayName}",
+            "Manage@{@data.Entity.Name}": "管理@{@data.Entity.EntityDisplayName}",
+            "Query@{@data.Entity.Name}": "查询@{@data.Entity.EntityDisplayName}",
+            "Create@{@data.Entity.Name}": "添加@{@data.Entity.EntityDisplayName}",
+            "Edit@{@data.Entity.Name}": "编辑@{@data.Entity.EntityDisplayName}",
+            "Delete@{@data.Entity.Name}": "删除@{@data.Entity.EntityDisplayName}",
+            "BatchDelete@{@data.Entity.Name}": "批量删除@{@data.Entity.EntityDisplayName}",
+            "Export@{@data.Entity.Name}": "导出@{@data.Entity.EntityDisplayName}",
+            "@{@data.Entity.Name}List": "@{@data.Entity.EntityDisplayName}列表"
+        </pre>
+    }
+}

@@ -1,0 +1,38 @@
+@model AbpDtoGenerator.GeneratorModels.ViewModel
+@{
+    var data = Model.Server;
+}
+
+{
+    @{
+        foreach (var item in data.Entity.Properties)
+        {
+            if (item.EditChecked || item.ListChecked)
+            {
+                if (item.FieldTypeStr=="string")
+                {
+                    <pre>
+                        "@{@data.Entity.Name@item.FieldName}": "@{@data.Entity.Name@item.FieldName}",
+                        "@{@data.Entity.Name@item.FieldName}InputDesc": "Please input your @{@data.Entity.Name@item.FieldName}",
+                    </pre> 
+                }
+                else
+                {
+                    string tmpStr = "\"" + item.FieldName + "\": \"" + item.FieldName + "\",\r\n";
+                    @tmpStr
+                }       
+            }
+        }       
+        <pre>                    
+            "@{@data.Entity.Name}": "@{@data.Entity.Name}",
+            "Manage@{@data.Entity.Name}": "Manage@{@data.Entity.Name}",
+            "Query@{@data.Entity.Name}": "Query@{@data.Entity.Name}",
+            "Create@{@data.Entity.Name}": "Create@{@data.Entity.Name}",
+            "Edit@{@data.Entity.Name}": "Edit@{@data.Entity.Name}",
+            "Delete@{@data.Entity.Name}": "Delete@{@data.Entity.Name}",
+            "BatchDelete@{@data.Entity.Name}": "BatchDelete@{@data.Entity.Name}",
+            "Export@{@data.Entity.Name}": "Export@{@data.Entity.Name}",
+            "@{@data.Entity.Name}List": "@{@data.Entity.Name}List",
+        </pre>
+    }
+}

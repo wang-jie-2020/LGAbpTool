@@ -15,47 +15,41 @@ namespace @{@data.Entity.Namespace}.DomainService
 		/// 返回表达式数的实体信息即IQueryable类型
 		/// </summary>
 		/// <returns></returns>
-		IQueryable<@{@data.Entity.Name}> Query@{@data.Entity.Name}s();
-
-		/// <summary>
-		/// 返回性能更好的IQueryable类型，但不包含EFCore跟踪标记
-		/// </summary>
-		/// <returns></returns>
-		IQueryable<@{@data.Entity.Name}> Query@{@data.Entity.Name}sAsNoTracking();
+		IQueryable<@{@data.Entity.Name}> QueryAll();
 
 		/// <summary>
 		/// 根据Id查询实体信息
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		Task<@{@data.Entity.Name}> FindByIdAsync(@{@data.Entity.EntityKeyName} id);
+		Task<@{@data.Entity.Name}> Find(@{@data.Entity.EntityKeyName} id);
 	
 		/// <summary>
 		/// 检查实体是否存在
 		/// </summary>
 		/// <returns></returns>
-		Task<bool> IsExistAsync(@{@data.Entity.EntityKeyName} id);
+		Task<bool> IsExist(@{@data.Entity.EntityKeyName} id);
 
 		/// <summary>
 		/// 添加@{@data.Entity.EntityDisplayName}
 		/// </summary>
 		/// <param name="entity">@{@data.Entity.EntityDisplayName}实体</param>
 		/// <returns></returns>
-		Task<@{@data.Entity.Name}> CreateAsync(@{@data.Entity.Name} entity);
+		Task<@{@data.Entity.Name}> Create(@{@data.Entity.Name} entity);
 
 		/// <summary>
 		/// 修改@{@data.Entity.EntityDisplayName}
 		/// </summary>
 		/// <param name="entity">@{@data.Entity.EntityDisplayName}实体</param>
 		/// <returns></returns>
-		Task UpdateAsync(@{@data.Entity.Name} entity);
+		Task Update(@{@data.Entity.Name} entity);
 
 		/// <summary>
 		/// 删除
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		Task DeleteAsync(@{@data.Entity.EntityKeyName} id);
+		Task Delete(@{@data.Entity.EntityKeyName} id);
 
 		/// <summary>
 		/// 批量删除
