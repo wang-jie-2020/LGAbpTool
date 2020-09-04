@@ -1,0 +1,30 @@
+﻿@{
+    var data = Model.Server;
+}
+using AutoMapper;
+using @data.Entity.Namespace;
+using @{@data.Entity.Namespace}.Dtos;
+
+namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.CustomDtoAutoMapper
+{
+	/// <summary>
+    /// 配置@{@data.Entity.Name}的AutoMapper映射
+    /// </summary>
+	internal class @{@data.Entity.Name}Profile : Profile
+    {
+        public @{@data.Entity.Name}Profile()
+        {
+            CreateMap<@{@data.Entity.Name}, @{@data.Entity.Name}ListDto>();
+            CreateMap<@{@data.Entity.Name}ListDto, @{@data.Entity.Name}>();
+
+            CreateMap<@{@data.Entity.Name}EditDto, @{@data.Entity.Name}>();
+            CreateMap<@{@data.Entity.Name}, @{@data.Entity.Name}EditDto>();
+					 
+			//// custom codes
+									
+            <pre></pre>@{@ViewBag.OldCustomCode}
+
+			//// custom codes end
+        }
+	}
+}

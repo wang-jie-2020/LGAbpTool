@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     var data = Model.Server;
 }
 using System.Collections.Generic;
@@ -13,10 +12,10 @@ namespace @{@data.Entity.Namespace}.Dtos
         [Required]
         public @{@data.Entity.Name}EditDto @{@data.Entity.Name} { get; set; }
 							
-							//// custom codes
+		//// custom codes
 									
-							
-							@{@ViewBag.OldCustomCode}
-							//// custom codes end
+        <pre></pre>@{@ViewBag.OldCustomCode}
+
+		//// custom codes end
     }
 }

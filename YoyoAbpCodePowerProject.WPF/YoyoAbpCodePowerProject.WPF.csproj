@@ -543,11 +543,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LGTemplates\Server\Application\Mapper\EntityDtoAutoMapper.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="LGTemplates\Server\DevelopAPI.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -574,11 +569,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LGTemplates\Server\Domain\Duoyuyan.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LGTemplates\Server\EntityFrameworkCore\EntityMapper\EntityCfg.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -634,6 +624,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LGTemplates\Server\Tests\EntityAppService_Tests.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LGTemplates\Server\Application\Mapper\EntityProfile.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -40,15 +40,16 @@ namespace AbpDtoGenerator.LGFeature
                 {
                     if (entityFieldModel.EditChecked)
                     {
-                        entityFieldModel.AppendFieldCode(stringBuilder);
+                        entityFieldModel.AppendFieldCode(stringBuilder, true);
                     }
                     if (entityFieldModel.ListChecked)
                     {
-                        entityFieldModel.AppendFieldCode(stringBuilder2);
+                        entityFieldModel.AppendFieldCode(stringBuilder2, false);
                     }
                 }
-                serverModel.EditDtoFieldCode = stringBuilder.ToString();
-                serverModel.ListDtoFieldCode = stringBuilder2.ToString();
+
+                serverModel.EditDtoFieldCode = stringBuilder.ToString().Trim();
+                serverModel.ListDtoFieldCode = stringBuilder2.ToString().Trim();
                 viewModel.Server = serverModel;
                 SPAModel spaclient = new SPAModel
                 {
@@ -61,7 +62,9 @@ namespace AbpDtoGenerator.LGFeature
                 {
                     if (!File.Exists(codeTemplateInfo.BuildPath) || Global.Option.IsOverrideFile)
                     {
-                        codeTemplateInfo.BuildCode = codeTemplateInfo.Path.GeneratorCode(viewModel, typeof(ViewModel), codeTemplateInfo.OldCustomCode);
+                        //王杰 格式化代码
+                        //codeTemplateInfo.BuildCode = codeTemplateInfo.Path.GeneratorCode(viewModel, typeof(ViewModel),  codeTemplateInfo.OldCustomCode);
+                        codeTemplateInfo.BuildCode = codeTemplateInfo.Path.GeneratorCode(viewModel, typeof(ViewModel), codeTemplateInfo.OldCustomCode?.Trim())?.Trim();
                     }
                 }
                 foreach (CodeTemplateInfo codeTemplateInfo2 in list)
@@ -79,7 +82,7 @@ namespace AbpDtoGenerator.LGFeature
             }
         }
 
-        private static void AppendFieldCode(this EntityFieldModel entityField, StringBuilder code)
+        private static void AppendFieldCode(this EntityFieldModel entityField, StringBuilder code, bool isEditDto)
         {
             string newValue = entityField.FieldName;
             if (!string.IsNullOrWhiteSpace(entityField.FieldDisplayName))
@@ -136,7 +139,7 @@ namespace AbpDtoGenerator.LGFeature
                 code.AppendLine("\t\tpublic {{PropType}} {{PropName}} { get; set; }");
             }
             code = code.Replace("{{PropAnnotation}}", newValue).Replace("{{MaxLength}}", entityField.MaxLength.GetValueOrDefault(0).ToString()).Replace("{{MinLength}}", entityField.MinLength.GetValueOrDefault(0).ToString()).Replace("{{RegularExpression}}", entityField.RegularExpression).Replace("{{PropType}}", entityField.FieldTypeStr).Replace("{{PropName}}", entityField.FieldName);
-            code.Append("\r\n\r\n");
+            //code.Append("\r\n\r\n");
         }
 
         private static List<CodeTemplateInfo> CreateCodeTemplates()
@@ -348,8 +351,14 @@ namespace AbpDtoGenerator.LGFeature
             if (option.IsAllGeneratorCode || option.UseApplicationServiceCode)
             {
                 string basePath = Global.SolutionInfo.Application.BasePath;
-                string buildPath = Path.Combine(basePath, entityDir, "Mapper", entity.Name + "DtoAutoMapper.cs");
-                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
+
+                //王杰 修改AutoMapper模板
+                //string buildPath = Path.Combine(basePath, entityDir, "Mapper", entity.Name + "DtoAutoMapper.cs");
+                //list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Mapper\\EntityDtoAutoMapper.txt"), buildPath));
+
+                string buildPath = Path.Combine(basePath, entityDir, "Mapper", entity.Name + "Profile.cs");
+                list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Application\\Mapper\\EntityProfile.txt"), buildPath));
+
                 if (option.UseExportExcel)
                 {
                     buildPath = Path.Combine(basePath, entityDir, "Exporting", "I" + entity.Name + "ListExcelExporter.cs");
@@ -450,6 +459,7 @@ namespace AbpDtoGenerator.LGFeature
                     list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Client\\NGZorro\\EntityListViewTs.txt"), buildPath));
                 }
             }
+
             if (option.IsAllGeneratorCode || option.UseDomainAuthorizeCode || option.UseDomainManagerCode)
             {
                 string basePath2 = Global.SolutionInfo.Core.BasePath;
@@ -473,13 +483,22 @@ namespace AbpDtoGenerator.LGFeature
                 buildPath2 = Path.Combine(basePath2, entityDir, "Readme.md");
                 list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Readme.txt"), buildPath2));
             }
-            string buildPath3 = Path.Combine(Global.SolutionInfo.EF.BasePath, "EntityMapper", entity.Name + "s", entity.Name + "Cfg.cs");
-            list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\EntityFrameworkCore\\EntityMapper\\EntityCfg.txt"), buildPath3));
+
+            /*
+                王杰 取消EntityMapper
+                默认情况不会采用FluentAPI的方式进行配置,任何框架类的都会采取DataAnnotation的方式
+                即使存在,也不能粗暴的扔出来每个表的配置,起码也按照模块进行
+                更不能理解的是，为什么要在EF层做这个事,不应该在Entity定义的时候就配置?
+             */
+            //string buildPath3 = Path.Combine(Global.SolutionInfo.EF.BasePath, "EntityMapper", entity.Name + "s", entity.Name + "Cfg.cs");
+            //list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\EntityFrameworkCore\\EntityMapper\\EntityCfg.txt"), buildPath3));
+
             if (option.UseXUnitTests)
             {
                 string buildPath4 = Path.Combine(Global.SolutionInfo.Tests.BasePath, entity.Name + "s", entity.Name + "AppService_Tests.cs");
                 list.Add(CodeTemplateInfo.Create(CodeTemplateType.Server, Path.Combine(templateBasePath, "LGTemplates\\Server\\Tests\\EntityAppService_Tests.txt"), buildPath4));
             }
+
             if (option.InitGeneratorCode)
             {
                 string basePath3 = Global.SolutionInfo.Application.BasePath;

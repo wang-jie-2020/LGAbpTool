@@ -243,7 +243,7 @@ namespace @data.Entity.Namespace
 							//// custom codes
 
 
-							@{@ViewBag.OldCustomCode}
+							<pre></pre>@{@ViewBag.OldCustomCode}
 							//// custom codes end
 
     }

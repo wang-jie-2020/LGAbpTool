@@ -8,11 +8,10 @@ using @data.Entity.Namespace;
 namespace @{@data.Entity.Namespace}.Dtos
 {
 	/// <summary>
-	/// 获取@{@data.Entity.EntityDisplayName}的传入参数Dto
+	/// 查询@{@data.Entity.EntityDisplayName}的传入参数Dto
 	/// </summary>
     public class Get@{@data.Entity.Name}sInput : PagedSortedAndFilteredInputDto, IShouldNormalize
     {
-
         /// <summary>
         /// 正常化排序使用
         /// </summary>
@@ -24,10 +23,10 @@ namespace @{@data.Entity.Namespace}.Dtos
             }
         }
 		
-							//// custom codes
+		//// custom codes
 									
-							
-							@{@ViewBag.OldCustomCode}
-							//// custom codes end
+        <pre></pre>@{@ViewBag.OldCustomCode}
+
+		//// custom codes end
     }
 }

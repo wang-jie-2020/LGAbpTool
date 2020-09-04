@@ -20,7 +20,7 @@ namespace @{@data.Entity.Namespace}.Exporting
 							//// custom codes
 									
 							
-							@{@ViewBag.OldCustomCode}
+							<pre></pre>@{@ViewBag.OldCustomCode}
 							//// custom codes end
     }
 }

@@ -50,7 +50,7 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 							//// custom codes
 									
 							
-							@{@ViewBag.OldCustomCode}
+							<pre></pre>@{@ViewBag.OldCustomCode}
 							//// custom codes end
          
     }

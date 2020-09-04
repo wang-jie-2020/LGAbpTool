@@ -73,7 +73,7 @@ namespace @{@data.Entity.Namespace}.DomainService
 							//// custom codes
 									
 							
-							@{@ViewBag.OldCustomCode}
+							<pre></pre>@{@ViewBag.OldCustomCode}
 							//// custom codes end
 
 		 

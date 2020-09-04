@@ -1,6 +1,5 @@
 @using YoyoSoft.AbpDtoGenerator.HtmlControlNames
 @model AbpDtoGenerator.GeneratorModels.ViewModel
-
 @{
     var data = Model.Server;
 }
@@ -17,6 +16,7 @@ namespace @{@data.Entity.Namespace}.Dtos
     {
 
         public @{@data.Entity.Name}EditDto @{@data.Entity.Name} { get; set; }
+
 		@{
             var entityEnums= data.Entity.Properties.Where(a => a.ContrlType == AppYoYoSoftControlNames.Enums).ToList();
             foreach (var model in entityEnums)
@@ -24,11 +24,12 @@ namespace @{@data.Entity.Namespace}.Dtos
                 var codeGist = @"public List<KeyValuePair<string, string>> " + model.FieldTypeStr + "TypeEnum { get;  set; }";
                     @codeGist
                 }
-
             }
-							//// custom codes		
+
+		//// custom codes		
 							
-							@{@ViewBag.OldCustomCode}
-							//// custom codes end
+        <pre></pre>@{@ViewBag.OldCustomCode}
+
+		//// custom codes end
     }
 }

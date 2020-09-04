@@ -4,32 +4,29 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Abp.Domain.Entities.Auditing;
 using System.Collections.ObjectModel;
+using Abp.Domain.Entities.Auditing;
 using @{@data.Entity.Namespace};
 
-
-namespace  @{@data.Entity.Namespace}.Dtos
+namespace @{@data.Entity.Namespace}.Dtos
 {
 	/// <summary>
-	/// @{@data.Entity.EntityDisplayName}的列表DTO
+	/// @{@data.Entity.EntityDisplayName}的编辑Dto
 	/// <see cref="@{@data.Entity.Name}"/>
 	/// </summary>
     public class @{@data.Entity.Name}EditDto
     {
-
         /// <summary>
         /// Id
         /// </summary>
         public @data.Entity.EntityKeyName? Id { get; set; }         
 
-
-        @data.EditDtoFieldCode
+		@data.EditDtoFieldCode
 		
-							//// custom codes
-									
-							
-							@{@ViewBag.OldCustomCode}
-							//// custom codes end
+		//// custom codes
+										
+		<pre></pre>@{@ViewBag.OldCustomCode}
+
+		//// custom codes end
     }
 }

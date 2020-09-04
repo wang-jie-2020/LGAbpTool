@@ -20,19 +20,20 @@ namespace AbpDtoGenerator
             return Engine.Razor.RunCompile(templateSource, tempaltePath, null, viewModel, null).Replace("&#39;", "'").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&lt;", "<");
         }
 
-        public static string GeneratorCode(this string tempaltePath, object viewModel, Type viewModelType, string OldCustomCode)
+        public static string GeneratorCode(this string tempaltePath, object viewModel, Type viewModelType, string oldCustomCode)
         {
             string result;
             try
             {
                 DynamicViewBag dynamicViewBag = new DynamicViewBag();
-                dynamicViewBag.AddValue("OldCustomCode", OldCustomCode);
+                dynamicViewBag.AddValue("OldCustomCode", oldCustomCode);
                 if (!RazorEngineEx.CreateEngineAfter)
                 {
                     RazorEngineEx.CreateEngine();
                 }
                 string templateSource = File.ReadAllText(tempaltePath, EncodingEx.Utf8WithoutBom);
-                result = Engine.Razor.RunCompile(templateSource, tempaltePath, viewModelType, viewModel, dynamicViewBag).Replace("&#39;", "'").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&lt;", "<").Replace("<pre>", "").Replace("</pre>", "");
+                result = Engine.Razor.RunCompile(templateSource, tempaltePath, viewModelType, viewModel, dynamicViewBag);
+                result = result.Replace("&#39;", "'").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&lt;", "<").Replace("<pre>", "").Replace("</pre>", "");
             }
             catch (Exception)
             {
