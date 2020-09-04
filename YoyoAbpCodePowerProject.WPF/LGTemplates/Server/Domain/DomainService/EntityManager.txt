@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     var data = Model.Server;
 }
 using Abp.Domain.Repositories;
@@ -9,26 +8,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace @{@data.Entity.Namespace}.DomainService
 {
     /// <summary>
-    /// @{@data.Entity.EntityDisplayName}领域服务层一个模块的核心业务逻辑
+    /// @{@data.Entity.EntityDisplayName}核心业务逻辑
     ///</summary>
-    public class @{@data.Entity.Name}Manager :@{@data.ReplaceInfo.SolutionNamespace}DomainServiceBase, I@{@data.Entity.Name}Manager
+    public class @{@data.Entity.Name}Manager : @{@data.ReplaceInfo.SolutionNamespace}DomainServiceBase, I@{@data.Entity.Name}Manager
     {
-		
-		private readonly IRepository<@{@data.Entity.Name},@{@data.Entity.EntityKeyName}> _@{@data.Entity.LowerName}Repository;
+		private readonly IRepository<@{@data.Entity.Name}, @{@data.Entity.EntityKeyName}> _@{@data.Entity.LowerName}Repository;
 
 		/// <summary>
 		/// @{@data.Entity.Name}的构造方法
-		/// 通过构造函数注册服务到依赖注入容器中
 		///</summary>
-	public @{@data.Entity.Name}Manager(IRepository<@{@data.Entity.Name}, @{@data.Entity.EntityKeyName}> @{@data.Entity.LowerName}Repository)	{
-			_@{@data.Entity.LowerName}Repository =  @{@data.Entity.LowerName}Repository;
+	    public @{@data.Entity.Name}Manager(IRepository<@{@data.Entity.Name}, @{@data.Entity.EntityKeyName}> @{@data.Entity.LowerName}Repository)	
+        {
+			_@{@data.Entity.LowerName}Repository = @{@data.Entity.LowerName}Repository;
 		}
-
-		 #region 查询判断的业务
 
         /// <summary>
         /// 返回表达式数的实体信息即IQueryable类型
@@ -70,10 +65,6 @@ namespace @{@data.Entity.Namespace}.DomainService
             return result;
         }
 
-        #endregion
-
-		 
-		 
         public async Task<@{@data.Entity.Name}> CreateAsync(@{@data.Entity.Name} entity)
         {
             entity.Id = await _@{@data.Entity.LowerName}Repository.InsertAndGetIdAsync(entity);
@@ -87,7 +78,6 @@ namespace @{@data.Entity.Namespace}.DomainService
 
         public async Task DeleteAsync(@{@data.Entity.EntityKeyName} id)
         {
-            //TODO:删除前的逻辑判断，是否允许删除
             await _@{@data.Entity.LowerName}Repository.DeleteAsync(id);
         }
 
@@ -98,22 +88,13 @@ namespace @{@data.Entity.Namespace}.DomainService
         /// <returns></returns>
         public async Task BatchDelete(List<@{@data.Entity.EntityKeyName}> input)
         {
-            //TODO:删除前的逻辑判断，是否允许删除
             await _@{@data.Entity.LowerName}Repository.DeleteAsync(a => input.Contains(a.Id));
         }
 	 
-			
-							//// custom codes
-									
-							
-							<pre></pre>@{@ViewBag.OldCustomCode}
-							//// custom codes end
+		//// custom codes
+													
+		<pre>@{@ViewBag.OldCustomCode}</pre>
 
-
-
-		 
-		  
-		 
-
+		//// custom codes end
 	}
 }

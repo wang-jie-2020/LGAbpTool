@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     var data = Model.Server;
 }
 using System;
@@ -17,10 +16,6 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 
         [Required]
         public string FileToken { get; set; }
-
-		 
-		 
-         
 
         public FileDto()
         {

@@ -14,21 +14,19 @@ namespace @{@data.Entity.Namespace}.Dtos
 	/// </summary>
     public class Get@{@data.Entity.Name}ForEditOutput
     {
-
         public @{@data.Entity.Name}EditDto @{@data.Entity.Name} { get; set; }
 
 		@{
-            var entityEnums= data.Entity.Properties.Where(a => a.ContrlType == AppYoYoSoftControlNames.Enums).ToList();
+            var entityEnums = data.Entity.Properties.Where(a => a.ContrlType == AppYoYoSoftControlNames.Enums).ToList();
             foreach (var model in entityEnums)
             {
                 var codeGist = @"public List<KeyValuePair<string, string>> " + model.FieldTypeStr + "TypeEnum { get;  set; }";
-                    @codeGist
-                }
-            }
-
+        <pre>@codeGist</pre>
+             }
+          }
 		//// custom codes		
 							
-        <pre></pre>@{@ViewBag.OldCustomCode}
+        <pre>@{@ViewBag.OldCustomCode}</pre>
 
 		//// custom codes end
     }

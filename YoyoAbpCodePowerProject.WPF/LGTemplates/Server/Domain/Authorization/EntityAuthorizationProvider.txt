@@ -1,4 +1,3 @@
-
 @{
     var data = Model.Server;
 }
@@ -12,9 +11,8 @@ using @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.A
 namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Authorization
 {
     /// <summary>
-    /// 权限配置都在这里。
-    /// 给权限默认设置服务
-    /// See <see cref="@{@data.Entity.Name}Permissions" /> for all permission names. @{@data.Entity.Name}
+    /// 权限配置
+    /// See <see cref="@{@data.Entity.Name}Permissions" /> 
     ///</summary>
     public class @{@data.Entity.Name}AuthorizationProvider : AuthorizationProvider
     {
@@ -25,7 +23,6 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 
 		}
 
-       
         public @{@data.Entity.Name}AuthorizationProvider(bool isMultiTenancyEnabled)
         {
             _isMultiTenancyEnabled = isMultiTenancyEnabled;
@@ -38,25 +35,22 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 
 		public override void SetPermissions(IPermissionDefinitionContext context)
 		{
-			// 在这里配置了@{@data.Entity.Name} 的权限。
 			var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
-
 			var administration = pages.Children.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration) ?? pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
 			var @{@data.Entity.LowerName} = administration.CreateChildPermission(@{@data.Entity.Name}Permissions.Node , L("@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Query, L("Query@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Create, L("Create@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Edit, L("Edit@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Delete, L("Delete@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.BatchDelete, L("BatchDelete@{@data.Entity.Name}"));
-			@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.ExportExcel, L("ExportToExcel"));
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Query, L("Query@{@data.Entity.Name}"));</pre>
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Create, L("Create@{@data.Entity.Name}"));</pre>
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Edit, L("Edit@{@data.Entity.Name}"));</pre>
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.Delete, L("Delete@{@data.Entity.Name}"));</pre>
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.BatchDelete, L("BatchDelete@{@data.Entity.Name}"));</pre>
+			<pre>@{@data.Entity.LowerName}.CreateChildPermission(@{@data.Entity.Name}Permissions.ExportExcel, L("ExportToExcel"));</pre>
 
-			
-							//// custom codes
-									
-							
-							<pre></pre>@{@ViewBag.OldCustomCode}
-							//// custom codes end
+			//// custom codes
+												
+			<pre>@{@ViewBag.OldCustomCode}</pre>
+
+			//// custom codes end
 		}
 
 		private static ILocalizableString L(string name)

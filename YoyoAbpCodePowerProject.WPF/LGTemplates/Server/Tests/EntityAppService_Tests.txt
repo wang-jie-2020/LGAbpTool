@@ -26,9 +26,7 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
             await _@{@data.Entity.LowerName}AppService.CreateOrUpdate(new CreateOrUpdate@{@data.Entity.Name}Input
             {
                 <pre> @{@data.Entity.Name} = new @{@data.Entity.Name}EditDto</pre>    
-                {
-						   
-
+                { 
 				   @{
                     foreach (var item in data.Entity.Properties)
                     {
@@ -36,28 +34,24 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
                         if (fieldTypeStr == "string")
                         {
                             <pre>@item.FieldName = "test",</pre>
-
                         }
+
                         if (fieldTypeStr == "DateTime")
                         {
                             <pre>@item.FieldName = DateTime.Now,</pre>
-
                         }
 
                         if (fieldTypeStr.Contains("Type") || fieldTypeStr.Contains("Enum"))
                         {
-                            <pre>// 枚举类型需要自己添加完善</pre>
-
+                            <pre>//枚举类型需要自己添加完善</pre>
                         }
 
                         if (fieldTypeStr=="float")
                         {
                             <pre>@item.FieldName = 1,</pre>
                         }
-
                     }
                 }
-
                 }
             });
 
@@ -65,8 +59,7 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
             {
                 var dystopia@{@data.Entity.Name} = await context.@{@data.Entity.Name}s.FirstOrDefaultAsync();
                 dystopia@{@data.Entity.Name}.ShouldNotBeNull();
-            }
-            );
+            });
         }
 
         [Fact]
@@ -84,12 +77,10 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
         }
 
 		
-							//// custom codes
+		//// custom codes
 									
-							
-							@{@ViewBag.OldCustomCode}
-							//// custom codes end
+		<pre>@{@ViewBag.OldCustomCode}</pre>
 
-
+		//// custom codes end
     }
 }

@@ -1,4 +1,3 @@
-
 @{
     var data = Model.Server;
 }
@@ -16,12 +15,6 @@ namespace  @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespa
         public int SkipCount { get; set; }
 
         public string FilterText { get; set; }
-
-
-		 
-		 
-         
-
 
         public PagedAndFilteredInputDto()
         {

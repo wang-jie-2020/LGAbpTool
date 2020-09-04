@@ -22,7 +22,7 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 					 
 			//// custom codes
 									
-            <pre></pre>@{@ViewBag.OldCustomCode}
+            <pre>@{@ViewBag.OldCustomCode}</pre>
 
 			//// custom codes end
         }

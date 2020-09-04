@@ -1,4 +1,3 @@
-
 @{
     var data = Model.Server;
 }
@@ -9,11 +8,6 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
     public class PagedAndSortedInputDto : PagedInputDto, ISortedResultRequest
     {
         public string Sorting { get; set; }
-
-
-		 
-		 
-         
 
         public PagedAndSortedInputDto()
         {

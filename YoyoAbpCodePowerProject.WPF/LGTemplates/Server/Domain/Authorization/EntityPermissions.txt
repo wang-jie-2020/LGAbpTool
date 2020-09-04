@@ -1,14 +1,13 @@
-﻿
-@{
+﻿@{
     var data = Model.Server;
 }
 namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespace}.Authorization
 {
 	/// <summary>
-    /// 定义系统的权限名称的字符串常量。
+    /// 定义系统的权限名称的字符串常量
     /// <see cref="@{@data.Entity.Name}AuthorizationProvider" />中对权限的定义.
     ///</summary>
-	public static  class @{@data.Entity.Name}Permissions
+	public static class @{@data.Entity.Name}Permissions
 	{
 		/// <summary>
 		/// @{@data.Entity.Name}权限节点
@@ -43,17 +42,13 @@ namespace @data.ReplaceInfo.CompanyNamespace@{@data.ReplaceInfo.SolutionNamespac
 		/// <summary>
 		/// @{@data.Entity.Name}导出Excel
 		///</summary>
-		public const string ExportExcel="Pages.@{@data.Entity.Name}.ExportExcel";
+		public const string ExportExcel = "Pages.@{@data.Entity.Name}.ExportExcel";
 
-		 
-		 
-							//// custom codes
-									
-							
-							<pre></pre>@{@ViewBag.OldCustomCode}
-							//// custom codes end
-         
+		//// custom codes
+											
+		<pre>@{@ViewBag.OldCustomCode}</pre>
+
+		//// custom codes end
     }
-
 }
 

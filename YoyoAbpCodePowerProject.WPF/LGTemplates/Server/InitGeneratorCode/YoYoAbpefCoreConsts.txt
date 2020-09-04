@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     var data = Model.Server;
 }
 namespace @data.ReplaceInfo.CompanyNamespace@data.ReplaceInfo.SolutionNamespace
@@ -21,15 +20,20 @@ namespace @data.ReplaceInfo.CompanyNamespace@data.ReplaceInfo.SolutionNamespace
         public static class EntityLengthNames
         {
             public const int Length8 = 8;
-            public const int Length16 = 16;
-            public const int Length32 = 32;
-            public const int Length64 = 65;
-            public const int Length128 = 128;
-            public const int Length256 = 256;
-            public const int Length512 = 512;
-       
-            public const int Length1024 = 1024;
 
+            public const int Length16 = 16;
+
+            public const int Length32 = 32;
+
+            public const int Length64 = 65;
+
+            public const int Length128 = 128;
+
+            public const int Length256 = 256;
+
+            public const int Length512 = 512;
+
+            public const int Length1024 = 1024;
         }
     }
 }

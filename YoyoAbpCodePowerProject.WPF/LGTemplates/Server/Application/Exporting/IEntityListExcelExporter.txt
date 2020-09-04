@@ -10,17 +10,16 @@ namespace @{@data.Entity.Namespace}.Exporting
     public interface I@{@data.Entity.Name}ListExcelExporter
     {
         /// <summary>
-        /// 导出为Excel文件
+        /// 导出Excel文件
         /// </summary>
         /// <param name="@{@data.Entity.LowerName}ListDtos">传入的@{@data.Entity.EntityDisplayName}数据集合</param>
         /// <returns></returns>
         FileDto ExportToExcelFile(List<@{@data.Entity.Name}ListDto> @{@data.Entity.LowerName}ListDtos);
 
-		
-							//// custom codes
-									
-							
-							<pre></pre>@{@ViewBag.OldCustomCode}
-							//// custom codes end
+		//// custom codes
+													
+		<pre>@{@ViewBag.OldCustomCode}</pre>
+
+		//// custom codes end
     }
 }

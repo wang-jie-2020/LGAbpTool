@@ -14,7 +14,7 @@ namespace @{@data.Entity.Namespace}.Dtos
 							
 		//// custom codes
 									
-        <pre></pre>@{@ViewBag.OldCustomCode}
+        <pre>@{@ViewBag.OldCustomCode}</pre>
 
 		//// custom codes end
     }
