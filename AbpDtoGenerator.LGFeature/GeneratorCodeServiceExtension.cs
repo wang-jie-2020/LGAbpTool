@@ -49,9 +49,9 @@ namespace AbpDtoGenerator.LGFeature
                 });
                 generatorCodeReplaceInfo.EntityNameManager = string.Concat(new string[]
                 {
-                    " _",
+                    "_",
                     entity.LowerName,
-                    "Manager=",
+                    "Manager = ",
                     entity.LowerName,
                     "Manager;"
                 });

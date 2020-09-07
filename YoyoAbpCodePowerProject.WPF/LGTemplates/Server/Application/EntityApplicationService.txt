@@ -39,10 +39,7 @@ namespace @data.Entity.Namespace
 		{
 		<pre>private readonly I@{@data.Entity.Name}ListExcelExporter _@{@data.Entity.LowerName}ListExcelExporter;</pre>  
 		}
-        @if (isHaveEnums)  
-		{
 		<pre>private readonly IEnumExtensionsAppService _enumExtensionsAppService;</pre>    
-		}
 
         /// <summary>
         /// 构造函数
@@ -52,20 +49,14 @@ namespace @data.Entity.Namespace
 			  {
 			  <pre>, @{@data.Entity.Name}ListExcelExporter @{@data.Entity.LowerName}ListExcelExporter</pre>
 			  } 
-              @if (isHaveEnums)
-			  {
-			  <pre>, IEnumExtensionsAppService enumExtensionsAppService</pre>
-			  }<pre>)</pre>
+			  <pre>, IEnumExtensionsAppService enumExtensionsAppService)</pre>
         {
 			@data.ReplaceInfo.EntityNameManager
 			@if (option.UseExportExcel)
 			{
 			<pre>_@{@data.Entity.LowerName}ListExcelExporter = @{@data.Entity.LowerName}ListExcelExporter;</pre>
 			}
-			@if (isHaveEnums)
-			{
 			<pre>_enumExtensionsAppService = enumExtensionsAppService;</pre>
-			}
         }
 
         /// <summary>
@@ -84,8 +75,9 @@ namespace @data.Entity.Namespace
                             {
 								<pre>.WhereIf(!input.FilterText.IsNullOrWhiteSpace(), a => a.@{@item.FieldName}.Contains(input.FilterText))	 //模糊搜索@{@item.FieldDisplayName}</pre>                               
 							}                           
-						}                       
-					}<pre>;</pre>
+						}                   
+					}
+					<pre>;</pre>
 
 			var count = await query.CountAsync();
 
@@ -95,7 +87,7 @@ namespace @data.Entity.Namespace
 					.ToListAsync();
 
 			var @{@data.Entity.LowerName}ListDtos = ObjectMapper.Map<List<@{@data.Entity.Name}ListDto>>(@{@data.Entity.LowerName}List);
-			return new PagedResultDto<@{@data.Entity.Name}ListDto>(count,@{@data.Entity.LowerName}ListDtos);
+			return new PagedResultDto<@{@data.Entity.Name}ListDto>(count, @{@data.Entity.LowerName}ListDtos);
 		}
 
 		/// <summary>

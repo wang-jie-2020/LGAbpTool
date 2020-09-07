@@ -182,7 +182,7 @@ namespace AbpDtoGenerator.LGFeature
                     }
                     else
                     {
-                        code.AppendLine("\t\t[MaxLength({{MaxLength}}, ErrorMessage=\"{{PropAnnotation}}超出最大长度\")]");
+                        code.AppendLine("\t\t[MaxLength({{MaxLength}}, ErrorMessage = \"{{PropAnnotation}}超出最大长度\")]");
                     }
                 }
                 if (entityField.MinLength != null)
@@ -194,16 +194,16 @@ namespace AbpDtoGenerator.LGFeature
                     }
                     else
                     {
-                        code.AppendLine("\t\t[MinLength({{MinLength}}, ErrorMessage=\"{{PropAnnotation}}小于最小长度\")]");
+                        code.AppendLine("\t\t[MinLength({{MinLength}}, ErrorMessage = \"{{PropAnnotation}}小于最小长度\")]");
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(entityField.RegularExpression))
                 {
-                    code.AppendLine("\t\t[RegularExpression(\"{{RegularExpression}}\",ErrorMessage=\"{{PropAnnotation}}格式错误\")]");
+                    code.AppendLine("\t\t[RegularExpression(\"{{RegularExpression}}\",ErrorMessage = \"{{PropAnnotation}}格式错误\")]");
                 }
                 if (entityField.Required)
                 {
-                    code.AppendLine("\t\t[Required(ErrorMessage=\"{{PropAnnotation}}不能为空\")]");
+                    code.AppendLine("\t\t[Required(ErrorMessage = \"{{PropAnnotation}}不能为空\")]");
                 }
             }
 
